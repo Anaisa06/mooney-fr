@@ -1,4 +1,4 @@
-import { Theme } from "@react-navigation/native";
+import { Theme, DefaultTheme } from "@react-navigation/native";
 import { Platform } from "react-native"
 
 const WEB_FONT_STACK =
@@ -77,7 +77,7 @@ export const darkTheme: Theme = {
     colors: {
         background: '#3C486B',
         text: '#F0F0F0',
-        primary: 'green',
+        primary: '#F45050',
         card: '#F0F0F0',
         border: '#ffffff',
         notification: '#6200ee',

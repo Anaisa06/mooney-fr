@@ -2,12 +2,12 @@ import { createContext, Dispatch, SetStateAction, useContext, useState } from "r
 import { Theme as NavigationTheme } from '@react-navigation/native';
 import { darkTheme, lightTheme } from "./themes";
 import { ReactNode } from 'react';
+import { ColorSchemeName } from "react-native";
 
-export type ThemeType = 'light' | 'dark';
 
 export interface ThemeContextProps {
-    themeType: ThemeType;
-    toggleTheme: Dispatch<SetStateAction<ThemeType>>;
+    themeType: ColorSchemeName;
+    toggleTheme: Dispatch<SetStateAction<ColorSchemeName>>;
 }
 
 const defaultTheme: ThemeContextProps = {

@@ -1,17 +1,23 @@
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext, useMemo, useState } from "react";
-import { Text, View } from "react-native";
-import { ThemeContext, ThemeContextProps, ThemeType } from "../theme/theme.context";
+import { Appearance, ColorSchemeName, Text, View } from "react-native";
+import { ThemeContext, ThemeContextProps } from "../theme/theme.context";
 import { darkTheme, lightTheme } from "../theme/themes";
 import Test from "../screens/Test";
+import { RootStackParamList } from "./navigation.types";
+import Login from "../screens/Login";
+import Register from "../screens/Register";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
 
-    const [theme, setTheme] = useState<ThemeType>('light');
-    const [isLogged, setIsLogged] = useState(false);
+    const colorScheme = Appearance.getColorScheme();
+    // console.log('colorrr' ,colorScheme)
+
+    const [theme, setTheme] = useState<ColorSchemeName>(colorScheme);
+    const [isLogged, setIsLogged] = useState(true);
 
 
     return (
@@ -22,13 +28,13 @@ const AppNavigator = () => {
                     {
                         isLogged ?
                             <>
-                                <Stack.Screen name="Home" component={Test} options={{}} />
-                                <Stack.Screen name="Settings" component={() => <View><Text>settings</Text></View>} />
+                                <Stack.Screen name="Login" component={Test} options={{headerShown: false}} />
+                                <Stack.Screen name="Register" component={() => <View><Text>settings</Text></View>} />
                             </>
                             :
                             <>
-                                <Stack.Screen name="Login" component={Test} options={{}} />
-                                <Stack.Screen name="Register" component={() => <View><Text>settings</Text></View>} />
+                                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
+                                <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
                             </>
                     }
 

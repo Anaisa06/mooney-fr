@@ -6,8 +6,13 @@ import { ThemeContext, ThemeContextProps } from '../theme/theme.context';
 const Test = () => {
 
     const {themeType, toggleTheme} = useContext(ThemeContext)
+
+    console.log('themet',themeType)
+
     const handleToggle = () => {
 
+      console.log('botooon')
+      
         toggleTheme((prev) => (prev === 'light' ? 'dark' : 'light')) 
 
     }
@@ -18,10 +23,10 @@ const Test = () => {
     <View>
         
     <Button color={colors.background} title='change theme' onPress= { 
-        handleToggle
+        handleToggle  
+        // () => console.log('botooon')
       }/>
 
-        <Text style={{ color: colors.primary}}>HOLAAAAAAAa con theme</Text>
     </View>
 
   )
