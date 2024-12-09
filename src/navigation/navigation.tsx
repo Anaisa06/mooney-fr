@@ -14,6 +14,8 @@ import { getToken, getUser } from "src/services/auth.services";
 import { IUser } from "src/interfaces/user.interface";
 import { AuthContext, defaultUser } from "src/context/user.context";
 import Icon from "react-native-vector-icons/Ionicons";
+import LogoutIcon from "@components/Atoms/HeaderIcons/LogoutIcon";
+import MenuIcon from "@components/Atoms/HeaderIcons/MenuIcon";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -55,8 +57,8 @@ const AppNavigator = () => {
                             <>
                                 <Stack.Screen name="Home" component={Home} options={{
                                     headerTitle: (props) => <HeaderLogo/>,
-                                    headerRight: ()=><Icon name='exit-outline' style={{fontSize: 40}}/>,
-                                    headerLeft: ()=><Icon name='menu-outline' style={{fontSize: 40}}/>
+                                    headerRight: () => <LogoutIcon/>,
+                                    headerLeft: ()=> <MenuIcon/>
                                 }} />
                             </>
                             :
