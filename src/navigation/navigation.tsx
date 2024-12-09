@@ -1,10 +1,9 @@
-import { NavigationContainer, useTheme } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Appearance, ColorSchemeName, Text, View } from "react-native";
 import { ThemeContext, ThemeContextProps } from "../theme/theme.context";
 import { darkTheme, lightTheme } from "../theme/themes";
-import Test from "../screens/Test";
 import { RootStackParamList } from "./navigation.types";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
@@ -13,7 +12,6 @@ import HeaderLogo from "@components/Atoms/Logo/HeaderLogo";
 import { getToken, getUser } from "src/services/auth.services";
 import { IUser } from "src/interfaces/user.interface";
 import { AuthContext, defaultUser } from "src/context/user.context";
-import Icon from "react-native-vector-icons/Ionicons";
 import LogoutIcon from "@components/Atoms/HeaderIcons/LogoutIcon";
 import MenuIcon from "@components/Atoms/HeaderIcons/MenuIcon";
 

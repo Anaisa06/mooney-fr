@@ -12,7 +12,7 @@ export const lightTheme: Theme = {
         primary: '#F45050',
         card: '#F0F0F0',
         border: '#ffffff',
-        notification: '#6200ee',
+        notification: '#F9D949',
     },
     fonts: Platform.select({
         web: {
@@ -80,7 +80,7 @@ export const darkTheme: Theme = {
         primary: '#F45050',
         card: '#3C486B',
         border: '#ffffff',
-        notification: '#6200ee',
+        notification: '#F9D949',
     },
     fonts: Platform.select({
         web: {

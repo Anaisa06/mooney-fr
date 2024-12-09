@@ -2,7 +2,6 @@ import { useTheme } from '@react-navigation/native';
 import React, { useContext } from 'react'
 import { Button, View } from 'react-native'
 import { ThemeContext } from '../theme/theme.context';
-import Icon from 'react-native-vector-icons/Ionicons'
 
 const Test = () => {
 
@@ -23,7 +22,6 @@ const Test = () => {
         handleToggle  
         // () => console.log('botooon')
       }/>
-      <Icon name='menu-outline' style={{fontSize: 40}}/>
 
     </View>
 
