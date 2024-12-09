@@ -1,6 +1,6 @@
 import { NavigationContainer, useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Appearance, ColorSchemeName, Text, View } from "react-native";
 import { ThemeContext, ThemeContextProps } from "../theme/theme.context";
 import { darkTheme, lightTheme } from "../theme/themes";
@@ -8,28 +8,56 @@ import Test from "../screens/Test";
 import { RootStackParamList } from "./navigation.types";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import Home from "@screens/Home";
+import HeaderLogo from "@components/Atoms/Logo/HeaderLogo";
+import { getToken, getUser } from "src/services/auth.services";
+import { IUser } from "src/interfaces/user.interface";
+import { AuthContext, defaultUser } from "src/context/user.context";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
 
     const colorScheme = Appearance.getColorScheme();
-    // console.log('colorrr' ,colorScheme)
 
     const [theme, setTheme] = useState<ColorSchemeName>(colorScheme);
+    const [user, setUser] = useState<IUser>(defaultUser.user)
     const [isLogged, setIsLogged] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // useEffect(() => {
+    //     const verifyToken = async () => {
+    //         try {
+    //             const tokenExists = await getToken();
+    //             const userLogged = await getUser();
+
+    //             setIsLogged(tokenExists); 
+    //             setUser(userLogged);
+    //         } catch (error) {
+    //             console.log("Error reading token:", error);                
+    //         } finally {
+    //             setIsLoading(false); 
+    //         }
+    //     }
+    // verifyToken();
+    // }, []);
 
 
     return (
         <NavigationContainer theme={theme === 'light' ? lightTheme : darkTheme}>
+            <AuthContext.Provider value={{user: user}}>
             <ThemeContext.Provider value={{ themeType: theme, toggleTheme: setTheme }}>
 
                 <Stack.Navigator>
                     {
                         isLogged ?
                             <>
-                                <Stack.Screen name="Login" component={Test} options={{headerShown: false}} />
-                                <Stack.Screen name="Register" component={() => <View><Text>settings</Text></View>} />
+                                <Stack.Screen name="Home" component={Home} options={{
+                                    headerTitle: (props) => <HeaderLogo/>,
+                                    headerRight: ()=><Icon name='exit-outline' style={{fontSize: 40}}/>,
+                                    headerLeft: ()=><Icon name='menu-outline' style={{fontSize: 40}}/>
+                                }} />
                             </>
                             :
                             <>
@@ -40,6 +68,7 @@ const AppNavigator = () => {
 
                 </Stack.Navigator>
             </ThemeContext.Provider>
+            </AuthContext.Provider>
         </NavigationContainer>
     );
 };

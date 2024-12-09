@@ -9,7 +9,8 @@ module.exports = {
           '@assets': './assets',
           '@components': './src/components',
           '@screens': './src/screens',
-
+          "@components": "./src/components",
+          "src": "./src"
         }
       }
     ]

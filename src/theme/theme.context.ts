@@ -1,9 +1,5 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
-import { Theme as NavigationTheme } from '@react-navigation/native';
-import { darkTheme, lightTheme } from "./themes";
-import { ReactNode } from 'react';
+import { createContext, Dispatch, SetStateAction } from "react";
 import { ColorSchemeName } from "react-native";
-
 
 export interface ThemeContextProps {
     themeType: ColorSchemeName;

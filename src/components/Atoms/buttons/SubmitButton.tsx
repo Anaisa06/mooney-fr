@@ -32,8 +32,8 @@ const createStyles = (theme: Theme) =>
             alignSelf: 'center'
         },
         buttonText: {
-            color: theme.colors.background,
-            fontSize: 23,
+            color: '#F0F0F0',
+            fontSize: 20,
             fontWeight: 'bold',
             textAlign: 'center'
         },

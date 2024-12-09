@@ -42,7 +42,7 @@ const createStyles = (theme: Theme) =>
             backgroundColor: theme.colors.text,
             color: theme.colors.background,
             fontWeight: 'bold',
-            fontSize: 17
+            fontSize: 14
           },
           inputError: {
             borderColor: 'red',
