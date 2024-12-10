@@ -1,10 +1,12 @@
 import SubmitButton from '@components/Atoms/buttons/SubmitButton'
 import TextInputField from '@components/Atoms/Inputs/TextInput'
 import { Theme } from '@react-navigation/native'
-import React from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import React, { useContext } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { View, Text, StyleSheet } from 'react-native'
+import { AuthContext } from 'src/context/user.context'
 import { LoginNavigationProp } from 'src/navigation/navigation.types'
+import { LoginService } from 'src/services/auth.services'
 
 interface IProps {
     theme: Theme;
@@ -18,10 +20,44 @@ interface IFormInput {
 
 const LoginForm = ({ theme, navigation }: IProps) => {
 
+    const { login: setUser } = useContext(AuthContext);
+
     const { control, handleSubmit, formState: { errors }
     } = useForm<IFormInput>();
 
-    const styles = createStyles(theme)
+    const styles = createStyles(theme);
+
+    const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+        console.log(data);
+        // try {
+        //     const response = await LoginService(data);
+        //     console.log(response);
+        //     if(response.statusCode === 201) {
+        //         navigation.dispatch(
+        //             CommonActions.reset({
+        //               index: 0,
+        //               routes: [{ name: response.data.user.onboarding ? 'AllContacts' : 'Onboarding' }],
+        //             })
+        //           );
+        //     }
+        // } catch (error: any) {
+        //     console.log('Error in login submit', error);
+        //     if (error.status === 400 ) {
+        //         setModalText('Las credenciales no son válidas')
+        //     } else {
+        //         setModalText('Algo salió mal')
+        //     }
+        //     setOpenModal(true);
+        // }
+        try {
+            const response = await LoginService(data);
+            console.log(response);
+            setUser(response.user);
+            
+        } catch (error) {
+            console.log('Error in login submit', error);
+        }
+    };
 
     return (
         <View style={{ display: 'flex', gap: 44,marginVertical: 30  }}>
@@ -50,7 +86,7 @@ const LoginForm = ({ theme, navigation }: IProps) => {
                     <TextInputField theme={theme} field={field} label='Contraseña' error={errors.password} isPassword={true} />
                 )}
             />
-            <SubmitButton theme={theme} text='Ingresar' handleSubmit={() => { }} />
+            <SubmitButton theme={theme} text='Ingresar' handleSubmit={handleSubmit(onSubmit)} />
             <Text style={styles.text} >
                 Si aún no tienes una cuenta, regístrate <Text onPress={() => navigation.navigate('Register')} style={styles.span} >aquí</Text>
             </Text>

@@ -4,7 +4,9 @@ import Test from './Test'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Theme, useTheme } from '@react-navigation/native'
 import GeneralBalance from '@components/Molecules/GeneralBalance'
-
+import Transactions from '@components/Organisms/Lists/Transactions'
+import LogoutIcon from '@components/Atoms/HeaderIcons/LogoutIcon'
+import Header from "@components/Organisms/Layout/Header";
 const Home = () => {
 
   const theme = useTheme();
@@ -12,9 +14,10 @@ const Home = () => {
   const styles = createStyles(theme);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView >
       <ScrollView>
-        <GeneralBalance theme={theme} totalBudget={350000} totalExpenses={300000} />
+        <GeneralBalance theme={theme} totalBudget={350000} totalExpenses={9000} />
+        <Transactions theme={theme}/>
         <Test />
       </ScrollView>
     </SafeAreaView>

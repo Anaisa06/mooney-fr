@@ -20,15 +20,15 @@ const HeaderLogo = () => {
 
 const styles = StyleSheet.create({
     container: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'center'
+
+      // justifyContent: 'flex-start',
+      // alignItems: 'center'
     },
     image: {
       objectFit: 'scale-down',
-      width: 349,
-      height: 100
+      width: 300,
+      height: 100,
+      // backgroundColor: 'red'
     }
   })
 

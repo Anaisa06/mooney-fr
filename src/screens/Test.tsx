@@ -5,7 +5,7 @@ import { ThemeContext } from '../theme/theme.context';
 
 const Test = () => {
 
-    const {themeType, toggleTheme} = useContext(ThemeContext)
+    const {toggleTheme} = useContext(ThemeContext)
 
     const handleToggle = () => {
       

@@ -4,6 +4,7 @@ export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
     Home: undefined;
+    Loading: undefined;
 }
 
 export type LoginNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;

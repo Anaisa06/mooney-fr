@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useState } from "react";
-import { Appearance, ColorSchemeName, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Appearance, Button, ColorSchemeName, Text, View } from "react-native";
 import { ThemeContext, ThemeContextProps } from "../theme/theme.context";
 import { darkTheme, lightTheme } from "../theme/themes";
 import { RootStackParamList } from "./navigation.types";
@@ -14,6 +14,10 @@ import { IUser } from "src/interfaces/user.interface";
 import { AuthContext, defaultUser } from "src/context/user.context";
 import LogoutIcon from "@components/Atoms/HeaderIcons/LogoutIcon";
 import MenuIcon from "@components/Atoms/HeaderIcons/MenuIcon";
+import Loading from "@screens/Loading";
+import Icon from 'react-native-vector-icons/Ionicons'
+import Header from "@components/Organisms/Layout/Header";
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,40 +27,53 @@ const AppNavigator = () => {
 
     const [theme, setTheme] = useState<ColorSchemeName>(colorScheme);
     const [user, setUser] = useState<IUser>(defaultUser.user)
-    const [isLogged, setIsLogged] = useState(true);
+    const [isLogged, setIsLogged] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     const verifyToken = async () => {
-    //         try {
-    //             const tokenExists = await getToken();
-    //             const userLogged = await getUser();
+    const handleLogin = (user: IUser) => {
+        setUser(user);
+        setIsLogged(true);
+    }
 
-    //             setIsLogged(tokenExists); 
-    //             setUser(userLogged);
-    //         } catch (error) {
-    //             console.log("Error reading token:", error);                
-    //         } finally {
-    //             setIsLoading(false); 
-    //         }
-    //     }
-    // verifyToken();
-    // }, []);
+    const handleLogout = () => {
+        console.log('logout');
+        setUser(defaultUser.user);
+        setIsLogged(false);
+    }
+
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                const tokenExists = await getToken();
+                const userLogged = await getUser();
+
+                setIsLogged(tokenExists); 
+                setUser(userLogged);
+            } catch (error) {
+                console.log("Error reading token:", error);                
+            } finally {
+                setIsLoading(false); 
+            }
+        }
+    verifyToken();
+    }, []);
 
 
     return (
         <NavigationContainer theme={theme === 'light' ? lightTheme : darkTheme}>
-            <AuthContext.Provider value={{user: user}}>
+            <AuthContext.Provider value={{user, login: handleLogin, logout: handleLogout}}>
             <ThemeContext.Provider value={{ themeType: theme, toggleTheme: setTheme }}>
 
                 <Stack.Navigator>
-                    {
+                    {   isLoading 
+                        ? <Stack.Screen name='Loading' component={Loading} options={{
+                            headerShown: false
+                        }}/>
+                        :
                         isLogged ?
                             <>
                                 <Stack.Screen name="Home" component={Home} options={{
-                                    headerTitle: (props) => <HeaderLogo/>,
-                                    headerRight: () => <LogoutIcon/>,
-                                    headerLeft: ()=> <MenuIcon/>
+                                    header:() => <Header/>
                                 }} />
                             </>
                             :

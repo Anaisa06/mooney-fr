@@ -1,4 +1,4 @@
-import { Theme, ThemeContext, useNavigation, useTheme } from '@react-navigation/native'
+import { Theme, useNavigation, useTheme } from '@react-navigation/native'
 import React, { useContext } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import Test from './Test'
