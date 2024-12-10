@@ -2,9 +2,11 @@ import SubmitButton from '@components/Atoms/buttons/SubmitButton'
 import TextInputField from '@components/Atoms/Inputs/TextInput'
 import { Theme } from '@react-navigation/native'
 import React from 'react'
-import { Controller, useForm, useWatch } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import { View, Text, StyleSheet } from 'react-native'
+import { IRegister } from 'src/interfaces/auth.interfaces'
 import { RegisterNavigationProp } from 'src/navigation/navigation.types'
+import { RegisterService } from 'src/services/auth.services'
 
 interface IProps {
     theme: Theme;
@@ -26,6 +28,28 @@ const RegisterForm = ({ theme, navigation }: IProps) => {
     const styles = createStyles(theme)
 
     const password = useWatch({ control, name: 'password', defaultValue: '' });
+
+    const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+        try {
+            const toSave: IRegister = {
+                name: data.name,
+                email: data.email,
+                password: data.password,  
+            } 
+            console.log('this is to save', toSave)
+
+            const response = await RegisterService(toSave);
+
+            console.log('this is response', response)
+            if(response.statusCode === 201) {
+                navigation.navigate('Login')
+            }
+        } catch (error) {
+            console.log('Error in register submit', error);
+           
+        } finally {
+        }
+    };
 
 
     return (
@@ -83,7 +107,7 @@ const RegisterForm = ({ theme, navigation }: IProps) => {
                     <TextInputField theme={theme} label="Confirmar contraseña" field={field} error={errors.confirmPassword} isPassword={true}/>
                 )}
             />
-            <SubmitButton theme={theme} text='Registrarse' handleSubmit={() => { }} />
+            <SubmitButton theme={theme} text='Registrarse' handleSubmit={handleSubmit(onSubmit)} />
             <Text style={styles.text} >
                 Si ya tienes una cuenta, ingresa <Text onPress={() => navigation.navigate('Login')} style={styles.span} >aquí</Text>
             </Text>

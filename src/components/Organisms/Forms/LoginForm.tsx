@@ -20,7 +20,7 @@ interface IFormInput {
 
 const LoginForm = ({ theme, navigation }: IProps) => {
 
-    const { login: setUser } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
 
     const { control, handleSubmit, formState: { errors }
     } = useForm<IFormInput>();
@@ -29,30 +29,26 @@ const LoginForm = ({ theme, navigation }: IProps) => {
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
         console.log(data);
-        // try {
-        //     const response = await LoginService(data);
-        //     console.log(response);
-        //     if(response.statusCode === 201) {
-        //         navigation.dispatch(
-        //             CommonActions.reset({
-        //               index: 0,
-        //               routes: [{ name: response.data.user.onboarding ? 'AllContacts' : 'Onboarding' }],
-        //             })
-        //           );
-        //     }
-        // } catch (error: any) {
-        //     console.log('Error in login submit', error);
-        //     if (error.status === 400 ) {
-        //         setModalText('Las credenciales no son válidas')
-        //     } else {
-        //         setModalText('Algo salió mal')
-        //     }
-        //     setOpenModal(true);
-        // }
+        try {
+            const response = await LoginService(data);
+            console.log('this is login response', response);
+            if(response.statusCode === 201) {
+                login(response.user);
+               
+            }
+        } catch (error: any) {
+            console.log('Error in login submit', error);
+            if (error.status === 400 ) {
+                // setModalText('Las credenciales no son válidas')
+            } else {
+                // setModalText('Algo salió mal')
+            }
+            // setOpenModal(true);
+        }
         try {
             const response = await LoginService(data);
             console.log(response);
-            setUser(response.user);
+            
             
         } catch (error) {
             console.log('Error in login submit', error);

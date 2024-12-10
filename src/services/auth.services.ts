@@ -5,33 +5,34 @@ import { IUser } from "src/interfaces/user.interface";
 
 export const LoginService = async (loginData: ILogin) => {
 
-    // const {data} = await apiAxiosInstance.post('auth/login', loginData);
-    // console.log(data.data.user);
-    // if(data.statusCode === 201) {
-    //     await setToken(data.data.token);
-    //     await setUser(data.data.user);
-    // }
-    // return data;
+    const {data} = await apiAxiosInstance.post('auth/login', loginData);
+    console.log('data from service', data)
+    console.log(data.data.user);
+    if(data.statusCode === 201) {
+        await setToken(data.data.token);
+        await setUser(data.data.user);
+    }
+    return data;
 
     
     // const {data} = await apiAxiosInstance.post('auth/login', loginData);
     // console.log(data.data.user);
     // if(data.statusCode === 201) {
-        await setToken('dummie-token');
-        await setUser({
-            name: 'Lulu',
-            id: 1,
-            email: 'lulu@gmail.com'
-        });
+    //     await setToken('dummie-token');
+    //     await setUser({
+    //         name: 'Lulu',
+    //         id: 1,
+    //         email: 'lulu@gmail.com'
+    //     });
     // }
-    return {
-        token: 'dummie-token',
-        user: {
-            name: 'Lulu',
-            id: 1,
-            email: 'lulu@gmail.com'
-        }
-    };
+    // return {
+    //     token: 'dummie-token',
+    //     user: {
+    //         name: 'Lulu',
+    //         id: 1,
+    //         email: 'lulu@gmail.com'
+    //     }
+    // };
 }
 
 export const RegisterService = async (registerData:IRegister ) => {
@@ -69,7 +70,7 @@ export const getToken = async () => {
     return true;
 }
 
-export const logout = async () => {
+export const removeTokenAndUser = async () => {
     try {
         await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('user');

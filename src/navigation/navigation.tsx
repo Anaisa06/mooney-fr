@@ -36,7 +36,6 @@ const AppNavigator = () => {
     }
 
     const handleLogout = () => {
-        console.log('logout');
         setUser(defaultUser.user);
         setIsLogged(false);
     }
@@ -82,7 +81,6 @@ const AppNavigator = () => {
                                 <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
                             </>
                     }
-
                 </Stack.Navigator>
             </ThemeContext.Provider>
             </AuthContext.Provider>
