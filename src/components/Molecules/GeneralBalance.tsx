@@ -15,7 +15,7 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses }: IProps) => {
     const expensesPercentage = (totalExpenses * 100) / totalBudget;
 
     const availableBackground =
-        expensesPercentage > 100
+        expensesPercentage >= 100
             ? theme.colors.primary
             : expensesPercentage > 80
                 ? theme.colors.notification
