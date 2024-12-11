@@ -1,7 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const backApiUrl = 'https://mooney-api.onrender.com/api/';
+// const backApiUrl = 'https://mooney-api.onrender.com/api/';
+
+const backApiUrl = 'http://192.168.89.88:3002/api/'
 
 const apiAxiosInstance = axios.create({
     baseURL: backApiUrl,

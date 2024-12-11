@@ -6,11 +6,12 @@ interface Props {
     text: string;
     handleSubmit: () => void;
     theme: Theme;
+    backgroundColor?: string;
 }
 
-const SubmitButton = ({ handleSubmit, text, theme }: Props) => {
+const SubmitButton = ({ handleSubmit, text, theme, backgroundColor }: Props) => {
 
-    const styles = createStyles(theme)
+    const styles = createStyles(theme, backgroundColor)
 
     return (
         <TouchableOpacity style={styles.button} onPress={handleSubmit} activeOpacity={0.8}>
@@ -19,10 +20,10 @@ const SubmitButton = ({ handleSubmit, text, theme }: Props) => {
     );
 };
 
-const createStyles = (theme: Theme) =>
+const createStyles = (theme: Theme, backgroundColor?: string) =>
     StyleSheet.create({
         button: {
-            backgroundColor: theme.colors.primary,
+            backgroundColor: backgroundColor ? backgroundColor : theme.colors.primary,
             width: '45%',
             height: 60,
             borderRadius: 8,
@@ -32,7 +33,7 @@ const createStyles = (theme: Theme) =>
             alignSelf: 'center'
         },
         buttonText: {
-            color: '#F0F0F0',
+            color: backgroundColor ? theme.colors.background : '#F0F0F0',
             fontSize: 20,
             fontWeight: 'bold',
             textAlign: 'center'
