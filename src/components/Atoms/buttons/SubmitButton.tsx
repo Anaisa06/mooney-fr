@@ -34,7 +34,7 @@ const createStyles = (theme: Theme, backgroundColor?: string) =>
         },
         buttonText: {
             color: backgroundColor ? theme.colors.background : '#F0F0F0',
-            fontSize: 20,
+            fontSize: 17,
             fontWeight: 'bold',
             textAlign: 'center'
         },

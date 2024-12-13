@@ -1,5 +1,5 @@
 import { Theme } from '@react-navigation/native';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface IProps {
@@ -19,7 +19,7 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses }: IProps) => {
             ? theme.colors.primary
             : expensesPercentage > 80
                 ? theme.colors.notification
-                : '#0A6847';
+                : '#12a874ff';
 
     const availableTextColor =
         expensesPercentage > 80 && expensesPercentage < 100
@@ -38,7 +38,8 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses }: IProps) => {
                     Presupuesto total
                 </Text>
                 <Text style={[styles.amounts, { textAlign: 'right', color: theme.colors.text }]}>
-                    ${totalBudget}.00
+                    ${totalBudget}.
+                    <Text style={{fontSize: 20}}>00</Text>
                 </Text>
             </View>
 
@@ -47,16 +48,16 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses }: IProps) => {
                     Gastos totales
                 </Text>
                 <Text style={[styles.amounts, { textAlign: 'left', color: theme.colors.primary }]}>
-                    ${totalExpenses}.00
+                    ${totalExpenses}.<Text style={{fontSize: 20}}>00</Text>
                 </Text>
             </View>
 
-            <View style={[styles.amountsContainer, { backgroundColor: availableBackground,  marginTop: 10, alignItems: 'flex-end'}]}>
+            <View style={[styles.amountsContainer, { backgroundColor: availableBackground,  marginVertical: 10, alignItems: 'flex-end'}]}>
                 <Text style={[styles.text, {  color: availableTextColor }]} >
                     Balance total
                 </Text>
                 <Text style={[styles.amounts, {  color: availableTextColor }]}>
-                    ${availableBudget}.00
+                    ${availableBudget}.<Text style={{fontSize: 20}}>00</Text>
                 </Text>
             </View>
             <View style={styles.line} />
@@ -71,7 +72,7 @@ const createStyles = (theme: Theme) =>
         container: {
             flex: 1,
             backgroundColor: theme.colors.background,
-            margin: 25
+            // margin: 25
         },
         title: {
             color: theme.colors.text,
@@ -93,7 +94,7 @@ const createStyles = (theme: Theme) =>
             marginVertical: 10,
         },
         amounts: {
-            fontSize: 27,
+            fontSize: 25,
             letterSpacing: 1,
             marginHorizontal: 40,
             fontWeight: 'bold'

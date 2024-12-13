@@ -17,6 +17,7 @@ import MenuIcon from "@components/Atoms/HeaderIcons/MenuIcon";
 import Loading from "@screens/Loading";
 import Icon from 'react-native-vector-icons/Ionicons'
 import Header from "@components/Organisms/Layout/Header";
+import { PaperProvider } from "react-native-paper";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -46,43 +47,44 @@ const AppNavigator = () => {
                 const tokenExists = await getToken();
                 const userLogged = await getUser();
 
-                setIsLogged(tokenExists); 
+                setIsLogged(tokenExists);
                 setUser(userLogged);
             } catch (error) {
-                console.log("Error reading token:", error);                
+                console.log("Error reading token:", error);
             } finally {
-                setIsLoading(false); 
+                setIsLoading(false);
             }
         }
-    verifyToken();
+        verifyToken();
     }, []);
 
 
     return (
         <NavigationContainer theme={theme === 'light' ? lightTheme : darkTheme}>
-            <AuthContext.Provider value={{user, login: handleLogin, logout: handleLogout}}>
-            <ThemeContext.Provider value={{ themeType: theme, toggleTheme: setTheme }}>
-
-                <Stack.Navigator>
-                    {   isLoading 
-                        ? <Stack.Screen name='Loading' component={Loading} options={{
-                            headerShown: false
-                        }}/>
-                        :
-                        isLogged ?
-                            <>
-                                <Stack.Screen name="Home" component={Home} options={{
-                                    header:() => <Header/>
+            <AuthContext.Provider value={{ user, login: handleLogin, logout: handleLogout }}>
+                <ThemeContext.Provider value={{ themeType: theme, toggleTheme: setTheme }}>
+                    <PaperProvider>
+                        <Stack.Navigator>
+                            {isLoading
+                                ? <Stack.Screen name='Loading' component={Loading} options={{
+                                    headerShown: false
                                 }} />
-                            </>
-                            :
-                            <>
-                                <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-                                <Stack.Screen name="Register" component={Register} options={{headerShown: false}}/>
-                            </>
-                    }
-                </Stack.Navigator>
-            </ThemeContext.Provider>
+                                :
+                                isLogged ?
+                                    <>
+                                        <Stack.Screen name="Home" component={Home} options={{
+                                            header: () => <Header />
+                                        }} />
+                                    </>
+                                    :
+                                    <>
+                                        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                                        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+                                    </>
+                            }
+                        </Stack.Navigator>
+                    </PaperProvider>
+                </ThemeContext.Provider>
             </AuthContext.Provider>
         </NavigationContainer>
     );
