@@ -6,13 +6,15 @@ import TextInputField from '@components/Atoms/Inputs/TextInput';
 import { Theme, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { BudgetFrecuency, BugdetType, CreateBudget } from 'src/interfaces/budget.interfaces';
 import { Category } from 'src/interfaces/category.interfaces';
 import navigation from 'src/navigation/navigation';
 import { HomeNavigationProp } from 'src/navigation/navigation.types';
 import { createBudget } from 'src/services/budget.services';
 import { getCategories } from 'src/services/category.services';
+import Icon from 'react-native-vector-icons/Ionicons';
+import CustomModal from '@components/Molecules/Modals/CustomModal';
 
 interface IFormInput {
     categoryId: number;
@@ -32,7 +34,8 @@ interface IProps {
 const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
 
     const [categories, setCategories] = useState<Category[]>([])
-    const navigation = useNavigation<HomeNavigationProp>();
+    const [fetchCategories, setFetchCategories] = useState(false)
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -41,11 +44,10 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                 setCategories(data);
             } catch (error) {
                 console.error('Error fetching categories in budget form', error)
-            }
+            } 
         }
-
         fetchCategories()
-    }, [])
+    }, [fetchCategories])
 
     const { control, handleSubmit, formState: { errors }
     } = useForm<IFormInput>();
@@ -67,6 +69,11 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
 
     const type = useWatch({ control, name: 'type' });
     const startDate = useWatch({ control, name: 'startDate'})
+
+    const handleCategoryModalClose = () => {
+        setFetchCategories(!fetchCategories)
+        setOpenModal(false)
+    }
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         
@@ -106,7 +113,14 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                     <PickerSelect onChange={field.onChange} value={field.value} items={categoriesForPicker} theme={theme} error={errors.categoryId} label='Seleccionar categoría' />
                 )}
             />
-            
+            <TouchableOpacity 
+            activeOpacity={0.3} 
+            style={{flexDirection: 'row', width: '80%', marginHorizontal: 'auto', alignItems: 'center', gap: 5}} 
+            onPress={() => setOpenModal(true)} >
+                <Icon name='add-circle-sharp' size={20} style={{ width: 25}} color={theme.colors.text}/>
+                <Text style={{color: theme.colors.text, letterSpacing: 1, fontSize: 12}} >Crear categoría</Text>
+            </TouchableOpacity>
+
             <Controller
                 control={control}
                 name="type"
@@ -176,6 +190,9 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                 )}
             />
             <SubmitButton theme={theme} text='Guardar' handleSubmit={handleSubmit(onSubmit)} />
+            <CustomModal openModal={openModal} onClose={handleCategoryModalClose} theme={theme} >
+                <Text>Crear categoría</Text>
+            </CustomModal>
 
 
         </View>
