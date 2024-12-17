@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { getCurrentBudget } from 'src/services/budget.services';
 import CustomModal from './Modals/CustomModal';
 import BudgetForm from '@components/Organisms/Forms/BudgetForm';
+import TransactionForm from '@components/Organisms/Forms/TransactionForm';
 
 interface IProps {
     theme: Theme;
@@ -13,19 +14,27 @@ interface IProps {
 
 const HomeButtons = ({ theme, reRender }: IProps) => {
 
-    const [openModal, setOpenModal] = useState(false);
+    const [openBudgetModal, setOpenBudgetModal] = useState(false);
+    const [openTransactionModal, setOpenTransactionModal] = useState(false);
+
 
     const styles = createStyles(theme);
     const handleBudgetPress = () => {
-        setOpenModal(true);
+        setOpenBudgetModal(true);
     }
 
+    const handleTransactionPress = () => {
+        setOpenTransactionModal(true);
+    }
     return (
         <View style={styles.container} >
             <SubmitButton theme={theme} text='Añadir     presupuesto' handleSubmit={handleBudgetPress} />
-            <SubmitButton theme={theme} text='Añadir       transacción' handleSubmit={() => { }} backgroundColor={theme.colors.text} />
-                <CustomModal theme={theme} openModal={openModal} onClose={() => setOpenModal(false)} >
-                    <BudgetForm theme={theme} closeModal={() => setOpenModal(false)} reRender={reRender} /> 
+            <SubmitButton theme={theme} text='Añadir       transacción' handleSubmit={handleTransactionPress} backgroundColor={theme.colors.text} />
+                <CustomModal theme={theme} openModal={openBudgetModal} onClose={() => setOpenBudgetModal(false)} >
+                    <BudgetForm theme={theme} closeModal={() => setOpenBudgetModal(false)} reRender={reRender} /> 
+                </CustomModal>
+                <CustomModal theme={theme} openModal={openTransactionModal} onClose={() => setOpenTransactionModal(false)} >
+                    <TransactionForm theme={theme} closeModal={() => setOpenTransactionModal(false)} reRender={reRender} /> 
                 </CustomModal>
         </View>
     )

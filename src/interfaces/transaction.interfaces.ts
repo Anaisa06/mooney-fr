@@ -5,6 +5,18 @@ export interface Transaction {
     description: string
     date: string
     total: number
-    type: string
+    type: TransactionType;
     budget: Budget
+}
+
+export interface CreateTransaction {
+    description: string
+    total: number
+    type: TransactionType;
+    budgetId: number;
+}
+
+export enum TransactionType {
+    BUDGET = 'Presupuesto',
+    EXPENSE = 'Gasto'
 }
