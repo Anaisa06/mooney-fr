@@ -99,10 +99,9 @@ const Home = ({ route }: IProps) => {
   return (
     <SafeAreaView style={{ flex: 1 }} >
       <Text style={{ textAlign: 'left', letterSpacing: 1, width: '80%', marginHorizontal: 'auto', color: theme.colors.text, margin: 10 }}>Cambiar categoría:</Text>
-      <View >
+      <View style={{marginBottom: 10}} >
         <PickerSelect items={categoriesForSelect} theme={theme} label='Categoría' error={errors.categoryId} value={categoryId} onChange={onSubmit} />
       </View>
-      <Test />
       <Transactions theme={theme} transactions={lastestTransactions} totalBudget={balance.totalBudget} totalExpenses={balance.totalExpenses} title={title} />
       <HomeButtons theme={theme} reRender={reRender} />
     </SafeAreaView>
