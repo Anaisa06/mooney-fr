@@ -8,9 +8,10 @@ import BudgetForm from '@components/Organisms/Forms/BudgetForm';
 
 interface IProps {
     theme: Theme;
+    reRender: () => void;
 }
 
-const HomeButtons = ({ theme }: IProps) => {
+const HomeButtons = ({ theme, reRender }: IProps) => {
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -19,13 +20,12 @@ const HomeButtons = ({ theme }: IProps) => {
         setOpenModal(true);
     }
 
-
     return (
         <View style={styles.container} >
             <SubmitButton theme={theme} text='Añadir     presupuesto' handleSubmit={handleBudgetPress} />
             <SubmitButton theme={theme} text='Añadir       transacción' handleSubmit={() => { }} backgroundColor={theme.colors.text} />
                 <CustomModal theme={theme} openModal={openModal} onClose={() => setOpenModal(false)} >
-                    <BudgetForm theme={theme} /> 
+                    <BudgetForm theme={theme} closeModal={() => setOpenModal(false)} reRender={reRender} /> 
                 </CustomModal>
         </View>
     )

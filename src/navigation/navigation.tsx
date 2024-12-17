@@ -72,7 +72,8 @@ const AppNavigator = () => {
                                 :
                                 isLogged ?
                                     <>
-                                        <Stack.Screen name="Home" component={Home} options={{
+                                        <Stack.Screen name="Home" initialParams={{reRender: false}} component={Home} options={{
+                                            
                                             header: () => <Header />
                                         }} />
                                         

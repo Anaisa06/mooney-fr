@@ -15,9 +15,13 @@ interface IProps {
 }
 
 const Home = ({ route }: IProps) => {
+  console.log(route.params.reRender)
 
   const [balance, setBalance] = useState({ totalBudget: 0, totalExpenses: 0 });
   const [lastestTransactions, setTransactions] = useState<Transaction[]>([])
+  const navigation = useNavigation<HomeNavigationProp>();
+
+  const reRender = () => navigation.setParams( {reRender: !route.params.reRender} )
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -41,7 +45,8 @@ const Home = ({ route }: IProps) => {
     }
 
     fetchInfo()
-  }, [])
+    
+  }, [route.params.reRender])
 
 
   const theme = useTheme();
@@ -53,7 +58,7 @@ const Home = ({ route }: IProps) => {
         <Test />
       <Transactions theme={theme} transactions={lastestTransactions} totalBudget={balance.totalBudget} totalExpenses={balance.totalExpenses} />
       {/* </ScrollView> */}
-      <HomeButtons theme={theme} />
+      <HomeButtons theme={theme} reRender={reRender} />
     </SafeAreaView>
   )
 }

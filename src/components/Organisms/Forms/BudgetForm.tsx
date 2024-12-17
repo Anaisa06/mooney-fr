@@ -25,10 +25,11 @@ interface IFormInput {
 
 interface IProps {
     theme: Theme;
-    // closeModal: () => void;
+    closeModal: () => void;
+    reRender: () => void;
 }
 
-const BudgetForm = ({ theme }: IProps) => {
+const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
 
     const [categories, setCategories] = useState<Category[]>([])
     const navigation = useNavigation<HomeNavigationProp>();
@@ -81,8 +82,8 @@ const BudgetForm = ({ theme }: IProps) => {
         try {
             const response = await createBudget(toSave)
             if(response.statusCode === 201) {
-                // closeModal()
-                // navigation.navigate('Home', {reRender: true} )
+                reRender()
+                closeModal()
             }
 
         } catch (error) {
@@ -105,6 +106,7 @@ const BudgetForm = ({ theme }: IProps) => {
                     <PickerSelect onChange={field.onChange} value={field.value} items={categoriesForPicker} theme={theme} error={errors.categoryId} label='Seleccionar categoría' />
                 )}
             />
+            
             <Controller
                 control={control}
                 name="type"
