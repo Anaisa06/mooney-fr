@@ -1,7 +1,7 @@
 import { Theme } from '@react-navigation/native';
 import React from 'react'
 import { ControllerRenderProps, FieldError } from 'react-hook-form';
-import { View, TextInput, StyleSheet, KeyboardTypeOptions } from 'react-native'
+import { View, TextInput, StyleSheet, KeyboardTypeOptions, Text } from 'react-native'
 
 interface Props {
     label: string;
@@ -16,7 +16,7 @@ const TextInputField = ({ label, field, error, type = 'default', isPassword = fa
 
     const styles = createStyles(theme);
     return (
-        <View>
+        <View style={{gap: 5}}>
             <TextInput
                 style={[styles.input, error ? styles.inputError : null]}
                 onChangeText={field.onChange}
@@ -26,11 +26,17 @@ const TextInputField = ({ label, field, error, type = 'default', isPassword = fa
                 placeholderTextColor={theme.colors.background}
                 secureTextEntry={isPassword}
             />
+            {
+                error &&
+                <Text style={styles.errorText}>
+                    {error.message}
+                </Text>
+            }
         </View>
     )
 }
 
-const createStyles = (theme: Theme) => 
+const createStyles = (theme: Theme) =>
     StyleSheet.create({
 
         input: {
@@ -41,17 +47,18 @@ const createStyles = (theme: Theme) =>
             borderRadius: 8,
             backgroundColor: theme.colors.text,
             color: theme.colors.background,
-            fontWeight: 'bold',
+            fontWeight: 'semibold',
             fontSize: 14
-          },
-          inputError: {
+        },
+        inputError: {
             borderColor: 'red',
-          },
-          errorText: {
+        },
+        errorText: {
             color: 'red',
             fontSize: 10,
-            textAlign: 'center'
-          },
+            textAlign: 'center',
+            letterSpacing: 1
+        },
     })
 
 

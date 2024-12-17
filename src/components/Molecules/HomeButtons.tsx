@@ -1,8 +1,10 @@
 import SubmitButton from '@components/Atoms/buttons/SubmitButton'
 import { Theme } from '@react-navigation/native'
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { getCurrentBudget } from 'src/services/budget.services';
+import CustomModal from './Modals/CustomModal';
+import BudgetForm from '@components/Organisms/Forms/BudgetForm';
 
 interface IProps {
     theme: Theme;
@@ -10,13 +12,21 @@ interface IProps {
 
 const HomeButtons = ({ theme }: IProps) => {
 
+    const [openModal, setOpenModal] = useState(false);
+
     const styles = createStyles(theme);
+    const handleBudgetPress = () => {
+        setOpenModal(true);
+    }
 
 
     return (
         <View style={styles.container} >
-            <SubmitButton theme={theme} text='Añadir     presupuesto' handleSubmit={() => {}} />
+            <SubmitButton theme={theme} text='Añadir     presupuesto' handleSubmit={handleBudgetPress} />
             <SubmitButton theme={theme} text='Añadir       transacción' handleSubmit={() => { }} backgroundColor={theme.colors.text} />
+                <CustomModal theme={theme} openModal={openModal} onClose={() => setOpenModal(false)} >
+                    <BudgetForm theme={theme} /> 
+                </CustomModal>
         </View>
     )
 }

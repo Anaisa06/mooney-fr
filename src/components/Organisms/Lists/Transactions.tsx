@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import TransactionCard from '@components/Molecules/TransactionCard';
 import GeneralBalance from '@components/Molecules/GeneralBalance';
+import React from 'react';
 
 interface IProps {
     theme: Theme;
@@ -39,7 +40,6 @@ const Transactions = ({ theme, transactions, totalBudget, totalExpenses }: IProp
     const styles = createStyles(theme);
 
     const data: any = groupByDate(transactions);
-    console.log(data);
 
     return (
         <View style={styles.container}>

@@ -12,7 +12,6 @@ interface IProps {
 const TransactionCard = ({ theme, transaction }: IProps) => {
 
     const styles = createStyles(theme);
-    console.log(transaction);
 
     const amountColor = transaction.type === 'Presupuesto' ? '#12a874ff' : '#F45050'
 

@@ -36,11 +36,9 @@ const RegisterForm = ({ theme, navigation }: IProps) => {
                 email: data.email,
                 password: data.password,  
             } 
-            console.log('this is to save', toSave)
 
             const response = await RegisterService(toSave);
 
-            console.log('this is response', response)
             if(response.statusCode === 201) {
                 navigation.navigate('Login')
             }

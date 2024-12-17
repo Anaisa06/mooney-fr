@@ -3,7 +3,7 @@ import axios from "axios";
 
 // const backApiUrl = 'https://mooney-api.onrender.com/api/';
 
-const backApiUrl = 'http://192.168.89.88:3002/api/'
+const backApiUrl = 'http://192.168.1.7:3002/api/'
 
 const apiAxiosInstance = axios.create({
     baseURL: backApiUrl,

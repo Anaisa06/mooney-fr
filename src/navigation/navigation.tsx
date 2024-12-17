@@ -8,19 +8,19 @@ import { RootStackParamList } from "./navigation.types";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Home from "@screens/Home";
-import HeaderLogo from "@components/Atoms/Logo/HeaderLogo";
 import { getToken, getUser } from "src/services/auth.services";
 import { IUser } from "src/interfaces/user.interface";
 import { AuthContext, defaultUser } from "src/context/user.context";
-import LogoutIcon from "@components/Atoms/HeaderIcons/LogoutIcon";
-import MenuIcon from "@components/Atoms/HeaderIcons/MenuIcon";
 import Loading from "@screens/Loading";
-import Icon from 'react-native-vector-icons/Ionicons'
 import Header from "@components/Organisms/Layout/Header";
 import { PaperProvider } from "react-native-paper";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import React from "react";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator();
+
 
 const AppNavigator = () => {
 
@@ -75,6 +75,7 @@ const AppNavigator = () => {
                                         <Stack.Screen name="Home" component={Home} options={{
                                             header: () => <Header />
                                         }} />
+                                        
                                     </>
                                     :
                                     <>

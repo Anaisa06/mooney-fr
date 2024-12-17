@@ -20,7 +20,6 @@ const Test = () => {
         
     <Button color={colors.background} title='change theme' onPress= { 
         handleToggle  
-        // () => console.log('botooon')
       }/>
 
     </View>

@@ -12,7 +12,8 @@ module.exports = {
           "@components": "./src/components",
           "src": "./src"
         }
-      }
+      },
+      'react-native-reanimated/plugin',
     ]
   ],
   env: {

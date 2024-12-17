@@ -28,13 +28,11 @@ const LoginForm = ({ theme, navigation }: IProps) => {
     const styles = createStyles(theme);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-        console.log(data);
         try {
             const response = await LoginService(data);
-            console.log('this is login response', response);
+
             if(response.statusCode === 201) {
-                login(response.user);
-               
+                login(response.user);     
             }
         } catch (error: any) {
             console.log('Error in login submit', error);
@@ -45,14 +43,7 @@ const LoginForm = ({ theme, navigation }: IProps) => {
             }
             // setOpenModal(true);
         }
-        try {
-            const response = await LoginService(data);
-            console.log(response);
-            
-            
-        } catch (error) {
-            console.log('Error in login submit', error);
-        }
+
     };
 
     return (
