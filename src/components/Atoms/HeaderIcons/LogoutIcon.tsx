@@ -1,6 +1,5 @@
 import { useTheme } from '@react-navigation/native'
 import { useContext } from 'react'
-import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { AuthContext } from 'src/context/user.context'
 import { removeTokenAndUser } from 'src/services/auth.services'
@@ -22,7 +21,7 @@ const LogoutIcon = () => {
 
   return (
 
-      <Icon name='exit-outline' style={{fontSize: 40, color: theme.colors.text}} onPress={handleLogout} />
+      <Icon name='exit-outline' style={{fontSize: 30, color: theme.colors.text, padding: 10}} onPress={handleLogout} />
   )
 }
 

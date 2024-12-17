@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Appearance, Button, ColorSchemeName, Text, View } from "react-native";
 import { ThemeContext, ThemeContextProps } from "../theme/theme.context";
 import { darkTheme, lightTheme } from "../theme/themes";
-import { RootStackParamList } from "./navigation.types";
+import { DrawerParamList, RootStackParamList } from "./navigation.types";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Home from "@screens/Home";
@@ -16,13 +16,16 @@ import Header from "@components/Organisms/Layout/Header";
 import { PaperProvider } from "react-native-paper";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
+import Test from "@screens/Test";
+import { AuthStackNavigator, LoadingStackNavigator } from "./StackNavigator";
+import DrawerNavigator from "./DrawerNavigator";
 
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
-const Drawer = createDrawerNavigator();
 
 
 const AppNavigator = () => {
+
+
 
     const colorScheme = Appearance.getColorScheme();
 
@@ -64,27 +67,14 @@ const AppNavigator = () => {
             <AuthContext.Provider value={{ user, login: handleLogin, logout: handleLogout }}>
                 <ThemeContext.Provider value={{ themeType: theme, toggleTheme: setTheme }}>
                     <PaperProvider>
-                        <Stack.Navigator>
-                            {isLoading
-                                ? <Stack.Screen name='Loading' component={Loading} options={{
-                                    headerShown: false
-                                }} />
-                                :
-                                isLogged ?
-                                    <>
-                                        <Stack.Screen name="Home" initialParams={{reRender: false}} component={Home} options={{
-                                            
-                                            header: () => <Header />
-                                        }} />
-                                        
-                                    </>
-                                    :
-                                    <>
-                                        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-                                        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
-                                    </>
-                            }
-                        </Stack.Navigator>
+                        {
+                            isLoading 
+                            ? <LoadingStackNavigator/>
+                            : isLogged
+                            ? <DrawerNavigator/>
+                            : <AuthStackNavigator/>
+                        }
+                       
                     </PaperProvider>
                 </ThemeContext.Provider>
             </AuthContext.Provider>

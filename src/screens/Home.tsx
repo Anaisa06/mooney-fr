@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, Text, TextInputSubmitEditingEventData, TouchableOpacity, View } from 'react-native'
-import Test from './Test'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation, useTheme } from '@react-navigation/native'
 import Transactions from '@components/Organisms/Lists/Transactions'
@@ -12,8 +11,8 @@ import { HomeNavigationProp, HomeRouteProp } from 'src/navigation/navigation.typ
 import { Category } from 'src/interfaces/category.interfaces'
 import { getCategories } from 'src/services/category.services'
 import PickerSelect from '@components/Atoms/Inputs/PickerSelect'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import SubmitButton from '@components/Atoms/buttons/SubmitButton'
+import { useForm } from 'react-hook-form'
+import Test from './Test'
 
 interface IProps {
   route: HomeRouteProp;
@@ -24,7 +23,6 @@ interface IFormInput {
 }
 
 const Home = ({ route }: IProps) => {
-  console.log(route.params.reRender)
 
   const [balance, setBalance] = useState({ totalBudget: 0, totalExpenses: 0 });
   const [lastestTransactions, setTransactions] = useState<Transaction[]>([]);

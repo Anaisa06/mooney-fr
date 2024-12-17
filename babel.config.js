@@ -1,5 +1,10 @@
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
+  env: {
+    production: {
+      plugins: ['react-native-paper/babel'],
+    },
+  },
   plugins: [
     [
       'module-resolver',
@@ -13,12 +18,8 @@ module.exports = {
           "src": "./src"
         }
       },
-      'react-native-reanimated/plugin',
-    ]
+    ],
+    'react-native-reanimated/plugin'
   ],
-  env: {
-    production: {
-      plugins: ['react-native-paper/babel'],
-    },
-  },
+
 };
