@@ -15,6 +15,7 @@ import { createBudget } from 'src/services/budget.services';
 import { getCategories } from 'src/services/category.services';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomModal from '@components/Molecules/Modals/CustomModal';
+import CategoryForm from './CategoryForm';
 
 interface IFormInput {
     categoryId: number;
@@ -191,7 +192,7 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
             />
             <SubmitButton theme={theme} text='Guardar' handleSubmit={handleSubmit(onSubmit)} />
             <CustomModal openModal={openModal} onClose={handleCategoryModalClose} theme={theme} >
-                <Text>Crear categoría</Text>
+                <CategoryForm theme={theme} onClose={handleCategoryModalClose}/>
             </CustomModal>
 
 
