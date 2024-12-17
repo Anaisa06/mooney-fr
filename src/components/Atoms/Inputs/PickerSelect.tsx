@@ -9,7 +9,7 @@ interface IProps {
         name: string;
         id: any;
     }[];
-    onChange: () => void;
+    onChange: any
     value: any;
     theme: Theme;
     error?: FieldError;

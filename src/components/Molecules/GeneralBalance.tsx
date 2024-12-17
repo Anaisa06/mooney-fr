@@ -6,9 +6,10 @@ interface IProps {
     theme: Theme;
     totalBudget: number;
     totalExpenses: number;
+    title: string;
 }
 
-const GeneralBalance = ({ theme, totalBudget, totalExpenses }: IProps) => {
+const GeneralBalance = ({ theme, totalBudget, totalExpenses, title }: IProps) => {
 
     const styles = createStyles(theme);
     const availableBudget = totalBudget - totalExpenses;
@@ -29,7 +30,7 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses }: IProps) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title} >
-                Balance general
+                {title}
             </Text>
             <View style={styles.line} />
 

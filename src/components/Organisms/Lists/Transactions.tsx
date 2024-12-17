@@ -12,6 +12,7 @@ interface IProps {
     transactions: Transaction[];
     totalBudget: number;
     totalExpenses: number;
+    title: string;
 }
 
 const groupByDate = (transactions: Transaction[]) => {
@@ -36,7 +37,7 @@ const groupByDate = (transactions: Transaction[]) => {
 
 }
 
-const Transactions = ({ theme, transactions, totalBudget, totalExpenses }: IProps) => {
+const Transactions = ({ theme, transactions, totalBudget, totalExpenses, title }: IProps) => {
     const styles = createStyles(theme);
 
     const data: any = groupByDate(transactions);
@@ -53,7 +54,7 @@ const Transactions = ({ theme, transactions, totalBudget, totalExpenses }: IProp
                 renderItem={({ item }) => (<TransactionCard theme={theme} transaction={item} />)}
                 ListHeaderComponent={
                     <>
-                        <GeneralBalance theme={theme} totalBudget={totalBudget} totalExpenses={totalExpenses} />
+                        <GeneralBalance theme={theme} totalBudget={totalBudget} totalExpenses={totalExpenses} title={title} />
                         <Text style={styles.title} >
                             Últimas transacciones
                         </Text>
