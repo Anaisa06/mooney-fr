@@ -31,13 +31,12 @@ const LoginForm = ({ theme, navigation }: IProps) => {
         
         try {
             const response = await LoginService(data);
-            console.log(response)
 
             if(response.statusCode === 201) {
                 login(response.user);     
             }
         } catch (error: any) {
-            console.log('Error in login submit', error);
+            console.error('Error in login submit', error);
             if (error.status === 400 ) {
                 // setModalText('Las credenciales no son válidas')
             } else {

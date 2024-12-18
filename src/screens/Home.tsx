@@ -35,7 +35,7 @@ const Home = ({ route }: IProps) => {
 
   const reRender = () => navigation.setParams({ reRender: !route.params.reRender })
 
-  const { control, handleSubmit, formState: { errors }
+  const { formState: { errors }
   } = useForm<IFormInput>();
 
   useEffect(() => {
@@ -98,10 +98,33 @@ const Home = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
+      <Text style={{
+        color: theme.colors.text,
+        textAlign: 'left',
+        fontSize: 20,
+        letterSpacing: 1,
+        lineHeight: 30,
+        marginHorizontal: 25,
+        marginTop: 25
+      }} >
+        Página principal
+      </Text>
+      <View style={{
+        borderBottomColor: theme.colors.text,
+        borderBottomWidth: 1,
+        marginVertical: 10,
+        marginHorizontal: 25
+      }} />
       <Text style={{ textAlign: 'left', letterSpacing: 1, width: '80%', marginHorizontal: 'auto', color: theme.colors.text, margin: 10 }}>Cambiar categoría:</Text>
-      <View style={{marginBottom: 10}} >
+      <View style={{ marginBottom: 10 }} >
         <PickerSelect items={categoriesForSelect} theme={theme} label='Categoría' error={errors.categoryId} value={categoryId} onChange={onSubmit} />
       </View>
+      <View style={{
+        borderBottomColor: theme.colors.text,
+        borderBottomWidth: 1,
+        marginVertical: 10,
+        marginHorizontal: 25
+      }} />
       <Transactions theme={theme} transactions={lastestTransactions} totalBudget={balance.totalBudget} totalExpenses={balance.totalExpenses} title={title} />
       <HomeButtons theme={theme} reRender={reRender} />
     </SafeAreaView>

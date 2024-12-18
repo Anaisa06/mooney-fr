@@ -53,7 +53,7 @@ const AppNavigator = () => {
                 setIsLogged(tokenExists);
                 setUser(userLogged);
             } catch (error) {
-                console.log("Error reading token:", error);
+                console.error("Error reading token:", error);
             } finally {
                 setIsLoading(false);
             }

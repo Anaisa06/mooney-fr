@@ -32,7 +32,6 @@ const CategoryForm = ({ theme, onClose }: IProps) => {
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             const response = await createCategory({...data, isCustom: true});
-            console.log(response);
 
             if(response.statusCode === 201) {
                 onClose()

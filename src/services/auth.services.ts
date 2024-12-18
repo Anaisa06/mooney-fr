@@ -3,29 +3,9 @@ import apiAxiosInstance from "src/config/axios.config";
 import { ILogin, IRegister } from "src/interfaces/auth.interfaces";
 import { IUser } from "src/interfaces/user.interface";
 
-export const LoginService = async (loginData: ILogin) => {
-
-    console.log('desde login')
-//    const response = await fetch('https://prepared-rita-mooney-02759274.koyeb.app/api/users/1', {
-//         method: 'GET',
-//         headers: {    
-                    
-//           'content-type': 'application/json',
-//         },
-//       })
-
-//       console.log(response);
-    
-//       const data = await response.json()
-
-//       console.log(data);
-
-//       return data;
-
-   
+export const LoginService = async (loginData: ILogin) => { 
     
     const {data} = await apiAxiosInstance.post('auth/login', loginData);
-    console.log('from login', data);
 
     if(data.statusCode === 201) {
         await setToken(data.data.token);

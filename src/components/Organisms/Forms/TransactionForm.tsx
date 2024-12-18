@@ -72,7 +72,6 @@ const TransactionForm = ({ theme, closeModal, reRender }: IProps) => {
 
         try {
             const response = await createTransaction(toSave);
-            console.log(response)
 
             if(response.statusCode === 201) {
                 reRender()

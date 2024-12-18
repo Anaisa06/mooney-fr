@@ -22,7 +22,6 @@ const apiAxiosInstance = axios.create({
 
   apiAxiosInstance.interceptors.request.use(
     async (config) => {
-      console.log('Request config:', config);
         const token = await AsyncStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -30,18 +29,17 @@ const apiAxiosInstance = axios.create({
         return config;
     },
     (error) => {
-      console.log('Request error:', error);
+      console.error('Request error:', error);
       return Promise.reject(error);
     }
 );
 
 apiAxiosInstance.interceptors.response.use(
     (response) =>{
-      console.log('Response data:', response.data);
       return response;
     },
     (error) => {
-      console.log('Response error:', error.toJSON());
+      console.error('Response error:', error.toJSON());
       if (error.response) {
         const customError = {
           message: error.response.data.message || 'Algo salió mal',

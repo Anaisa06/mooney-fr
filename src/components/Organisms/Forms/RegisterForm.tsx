@@ -43,7 +43,7 @@ const RegisterForm = ({ theme, navigation }: IProps) => {
                 navigation.navigate('Login')
             }
         } catch (error) {
-            console.log('Error in register submit', error);
+            console.error('Error in register submit', error);
            
         } finally {
         }

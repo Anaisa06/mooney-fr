@@ -1,88 +1,126 @@
+import PickerSelect from '@components/Atoms/Inputs/PickerSelect';
+import PieChart from '@components/Organisms/Charts/PieChart';
 import { Theme, useTheme } from '@react-navigation/native';
-import React, { ReactNode } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Pie, PolarChart,  } from "victory-native";
-
-function randomNumber() {
-    return Math.floor(Math.random() * 26) + 125;
-}
-function generateRandomColor(): string {
-    // Generating a random number between 0 and 0xFFFFFF
-    const randomColor = Math.floor(Math.random() * 0xffffff);
-    // Converting the number to a hexadecimal string and padding with zeros
-    return `#${randomColor.toString(16).padStart(6, "0")}`;
-}
-
-const DATA = (numberPoints = 5) =>
-    Array.from({ length: numberPoints }, (_, index) => ({
-        value: randomNumber(),
-        color: generateRandomColor(),
-        label: `Label ${index + 1}`,
-    }));
-
-    const data = [
-        {
-            value: 30,
-            color: generateRandomColor(),
-            label: '30'
-        },
-        {
-            value: 60,
-            color: generateRandomColor(),
-            label: '60'
-        },
-        {
-            value: 60,
-            color: generateRandomColor(),
-            label: '60'
-        },
-
-    ]
-
+import { Category } from 'src/interfaces/category.interfaces';
+import { Transaction } from 'src/interfaces/transaction.interfaces';
+import { getCurrentBudget } from 'src/services/budget.services';
+import { getCategories } from 'src/services/category.services';
+import { getCurrentTransactions } from 'src/services/transaction.services';
 
 const Statistics = () => {
     const theme = useTheme();
+    const [balance, setBalance] = useState({ totalBudget: 0, totalExpenses: 0 });
+    const [title, setTitle] = useState('Balance General')
+    const [query, setQuery] = useState('');
+    const [categoryId, setCategoryId] = useState('')
+
+
+
+    const [categories, setCategories] = useState<Category[]>([])
+    const [lastestTransactions, setTransactions] = useState<Transaction[]>([]);
+
+    useEffect(() => {
+        const fetchInfo = async () => {
+            const budgets = await getCurrentBudget(query);
+            const transactions = await getCurrentTransactions(query);
+            const userCategories = await getCategories();
+            setCategories(userCategories);
+            // setTransactions(transactions);
+            let totalBudgetAmount = 0;
+            let totalTransactionsAmount = 0;
+
+            budgets.forEach((budget) => {
+                totalBudgetAmount += budget.total;
+            })
+
+            transactions.forEach((transaction) => {
+
+                if (transaction.type === 'Presupuesto') return
+                totalTransactionsAmount += transaction.total
+            })
+
+            setBalance((prev) => ({ totalExpenses: totalTransactionsAmount, totalBudget: totalBudgetAmount }));
+        }
+
+        fetchInfo()
+    }, [ query])
+
+    const categoriesObject = categories.map(category => {
+        return {
+            name: category.name,
+            id: category.id
+        }
+    })
+
+    const categoriesForSelect = [
+        ...categoriesObject,
+        {
+            name: 'General',
+            id: 0
+        }
+    ]
+
+    const onSubmit = (data: string) => {
+
+        if (!data) {
+            setTitle('Balance General')
+            setQuery('');
+            return
+        }
+
+        const categoryName = categories.find(category => category.id === +data)
+        if (categoryName) setTitle(categoryName.name);
+        setQuery(`categoryId=${data}`)
+    }
+
+    // let object = {
+    //     value: 0,
+    //     color: '',
+    //     label: ''
+    // }
+    // const chartData = lastestTransactions.map((transaction) => {
+
+    //     if (transaction.type === 'Presupuesto') return
+    //     if (object.label === transaction.budget.category.name) {
+
+    //     }
+    // })
+    const chartData = [
+        {
+            value: balance.totalExpenses,
+            label: 'Gastos',
+            color: theme.colors.primary
+        },
+        {
+            value: balance.totalBudget - balance.totalExpenses,
+            label: 'Disponible',
+            color: '#12a874ff'
+        }
+    ]
+
+
 
     const styles = createStyles(theme);
 
     return (
         <SafeAreaView style={{ flex: 1 }} >
             <View style={styles.container}>
-
                 <Text style={styles.title} >
                     Estadísticas
                 </Text>
                 <View style={styles.line} />
+                <Text style={{ textAlign: 'left', letterSpacing: 1, width: '80%', marginHorizontal: 'auto', color: theme.colors.text, margin: 10 }}>Cambiar categoría:</Text>
 
-                <View style={{ height: 300, marginTop: 15 }}>
-
-                    <PolarChart data={data} colorKey={'color'} labelKey={'label'} valueKey={'value'}>
-                        <Pie.Chart size={200}>
-
-                            {({ slice }) => {
-                                {console.log(slice)}
-
-                                return (
-                                    <>
-                                        <Pie.Slice >
-                                            <Pie.Label text={'HOLA'} color={"red"} radiusOffset={50} />
-                                            
-                                        </Pie.Slice>
-                                        <Pie.SliceAngularInset
-                                            angularInset={{
-                                                angularStrokeWidth: 8,
-                                                angularStrokeColor: theme.colors.background,
-                                            }}
-                                        />
-                                    </>
-                                );
-                            }}
-
-
-                        </Pie.Chart>
-                    </PolarChart>
+                <View style={{ marginBottom: 20 }} >
+                    <PickerSelect items={categoriesForSelect} theme={theme} label='Categoría' value={categoryId} onChange={onSubmit} />
                 </View>
+                <View style={styles.line} />
+
+
+                <PieChart theme={theme} data={chartData} title={title} />
 
             </View>
 
