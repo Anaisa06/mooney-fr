@@ -28,8 +28,10 @@ const LoginForm = ({ theme, navigation }: IProps) => {
     const styles = createStyles(theme);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+        
         try {
             const response = await LoginService(data);
+            console.log(response)
 
             if(response.statusCode === 201) {
                 login(response.user);     

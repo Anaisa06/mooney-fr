@@ -1,13 +1,20 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import https from 'https';
 
-// const backApiUrl = 'https://mooney-api.onrender.com/api/';
 
-const backApiUrl = 'http://192.168.1.7:3002/api/'
+// const agent = new https.Agent({
+//   rejectUnauthorized: false,
+// });
+
+const backApiUrl = 'http://prepared-rita-mooney-02759274.koyeb.app/api/';
+
+// const backApiUrl = 'http://192.168.1.7:3002/api/'
+
 
 const apiAxiosInstance = axios.create({
     baseURL: backApiUrl,
-    timeout: 10000,
+    timeout: 10000,     
     headers: {
       'Content-Type': 'application/json',
   },
@@ -15,17 +22,26 @@ const apiAxiosInstance = axios.create({
 
   apiAxiosInstance.interceptors.request.use(
     async (config) => {
+      console.log('Request config:', config);
         const token = await AsyncStorage.getItem('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
     },
+    (error) => {
+      console.log('Request error:', error);
+      return Promise.reject(error);
+    }
 );
 
 apiAxiosInstance.interceptors.response.use(
-    (response) => response,
+    (response) =>{
+      console.log('Response data:', response.data);
+      return response;
+    },
     (error) => {
+      console.log('Response error:', error.toJSON());
       if (error.response) {
         const customError = {
           message: error.response.data.message || 'Algo salió mal',

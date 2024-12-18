@@ -5,7 +5,27 @@ import { IUser } from "src/interfaces/user.interface";
 
 export const LoginService = async (loginData: ILogin) => {
 
+    console.log('desde login')
+//    const response = await fetch('https://prepared-rita-mooney-02759274.koyeb.app/api/users/1', {
+//         method: 'GET',
+//         headers: {    
+                    
+//           'content-type': 'application/json',
+//         },
+//       })
+
+//       console.log(response);
+    
+//       const data = await response.json()
+
+//       console.log(data);
+
+//       return data;
+
+   
+    
     const {data} = await apiAxiosInstance.post('auth/login', loginData);
+    console.log('from login', data);
 
     if(data.statusCode === 201) {
         await setToken(data.data.token);
@@ -51,8 +71,7 @@ export const getToken = async () => {
 
 export const removeTokenAndUser = async () => {
     try {
-        await AsyncStorage.removeItem('token');
-        await AsyncStorage.removeItem('user');
+        await AsyncStorage.clear();
     } catch (error) {
         console.error('Error in logout', error)
     }
