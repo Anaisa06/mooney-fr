@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React, { useContext } from 'react'
-import { DrawerParamList, HomeNavigationProp } from './navigation.types';
+import { DrawerParamList, HomeNavigationProp, StatisticsNavigationProp } from './navigation.types';
 import Home from '@screens/Home';
 import HeaderLogo from '@components/Atoms/Logo/HeaderLogo';
 import LogoutIcon from '@components/Atoms/HeaderIcons/LogoutIcon';
@@ -22,6 +22,7 @@ const DrawerContent = ({ theme }: { theme: Theme }) => {
     const { logout } = useContext(AuthContext)
 
     const navigationHome = useNavigation<HomeNavigationProp>();
+    const navigationStatistics = useNavigation<StatisticsNavigationProp>();
 
     const handleHomePress = () => {
         setActive('home')
@@ -30,7 +31,7 @@ const DrawerContent = ({ theme }: { theme: Theme }) => {
 
     const handleStatisticsPress = () => {
         setActive('statistics')
-        navigationHome.navigate('Statistics')
+        navigationStatistics.navigate('Statistics', { reRender: true })
     }
 
 
@@ -101,7 +102,7 @@ const DrawerNavigator = () => {
                 headerStyle: { height: 100 }
             }}>
             <Drawer.Screen name="Home" component={Home} initialParams={{ reRender: false }} />
-            <Drawer.Screen name="Statistics" component={Statistics}/>
+            <Drawer.Screen name="Statistics" initialParams={{ reRender: false }} component={Statistics} />
         </Drawer.Navigator>
     )
 }

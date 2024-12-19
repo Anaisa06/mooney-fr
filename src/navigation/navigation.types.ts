@@ -10,7 +10,7 @@ export type RootStackParamList = {
 
 export type DrawerParamList = {
     Home: {reRender?: boolean};
-    Statistics: undefined;
+    Statistics: {reRender?: boolean};
 };
 
 export type LoginNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -20,3 +20,7 @@ export type RegisterNavigationProp = NativeStackNavigationProp<RootStackParamLis
 export type HomeNavigationProp = DrawerNavigationProp<DrawerParamList, 'Home'>;
 
 export type HomeRouteProp = RouteProp<DrawerParamList, 'Home'>;
+
+export type StatisticsNavigationProp = DrawerNavigationProp<DrawerParamList, 'Statistics'>;
+
+export type StatisticsRouteProp = RouteProp<DrawerParamList, 'Statistics'>;
