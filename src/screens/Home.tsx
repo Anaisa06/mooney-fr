@@ -1,60 +1,61 @@
-import React, { useEffect, useState } from 'react'
-import { ScrollView } from 'react-native'
-import Test from './Test'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useTheme } from '@react-navigation/native'
-import GeneralBalance from '@components/Molecules/GeneralBalance'
-import Transactions from '@components/Organisms/Lists/Transactions'
-import HomeButtons from '@components/Molecules/HomeButtons'
-import { getCurrentBudget } from 'src/services/budget.services'
-import { getCurrentTransactions } from 'src/services/transaction.services'
-import { Transaction } from 'src/interfaces/transaction.interfaces'
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Transactions from '@components/Organisms/Lists/Transactions';
+import HomeButtons from '@components/Molecules/HomeButtons';
+import { HomeRouteProp } from 'src/navigation/navigation.types';
+import PickerSelect from '@components/Atoms/Inputs/PickerSelect';
+import { useHome } from 'src/hooks/Home/useHome';
 
+interface IProps {
+  route: HomeRouteProp;
+}
 
-const Home = () => {
+const Home = ({ route }: IProps) => {
 
-  const [balance, setBalance] = useState({ totalBudget: 0, totalExpenses: 0 });
-  const [lastestTransactions, setTransactions] = useState<Transaction[]>([])
-
-
-  useEffect(() => {
-    const fetchInfo = async () => {
-      const budgets = await getCurrentBudget();
-      const transactions = await getCurrentTransactions();
-      setTransactions(transactions);
-      let totalBudgetAmount = 0;
-      let totalTransactionsAmount = 0;
-
-      budgets.forEach((budget) => {
-        totalBudgetAmount += budget.total;
-      })
-
-      transactions.forEach((transaction) => {
-
-        if (transaction.type === 'Presupuesto') return
-        totalTransactionsAmount += transaction.total
-      })
-
-      setBalance((prev) => ({ totalExpenses: totalTransactionsAmount, totalBudget: totalBudgetAmount }));
-    }
-
-    fetchInfo()
-  }, [])
-
-
-  const theme = useTheme();
+  const {
+    theme,
+    title,
+    categoriesForSelect,
+    onSubmit,
+    lastestTransactions,
+    balance,
+    reRender,
+  } = useHome(route);
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      {/* <ScrollView> */}
-        {/* <GeneralBalance theme={theme} totalBudget={balance.totalBudget} totalExpenses={balance.totalExpenses} /> */}
-        <Test />
-      <Transactions theme={theme} transactions={lastestTransactions} totalBudget={balance.totalBudget} totalExpenses={balance.totalExpenses} />
-      {/* </ScrollView> */}
-      <HomeButtons theme={theme} />
+      <Text style={{
+        color: theme.colors.text,
+        textAlign: 'left',
+        fontSize: 20,
+        letterSpacing: 1,
+        lineHeight: 30,
+        marginHorizontal: 25,
+        marginTop: 25,
+      }} >
+        Página principal
+      </Text>
+      <View style={{
+        borderBottomColor: theme.colors.text,
+        borderBottomWidth: 1,
+        marginVertical: 10,
+        marginHorizontal: 25,
+      }} />
+      <Text style={{ textAlign: 'left', letterSpacing: 1, width: '80%', marginHorizontal: 'auto', color: theme.colors.text, margin: 10 }}>Cambiar categoría:</Text>
+      <View style={{ marginBottom: 10 }} >
+        <PickerSelect items={categoriesForSelect} theme={theme} label="Categoría" value={''} onChange={onSubmit} />
+      </View>
+      <View style={{
+        borderBottomColor: theme.colors.text,
+        borderBottomWidth: 1,
+        marginVertical: 10,
+        marginHorizontal: 25,
+      }} />
+      <Transactions theme={theme} transactions={lastestTransactions} totalBudget={balance.totalBudget} totalExpenses={balance.totalExpenses} title={title} />
+      <HomeButtons theme={theme} reRender={reRender} />
     </SafeAreaView>
-  )
-}
+  );
+};
 
 
-export default Home
+export default Home;

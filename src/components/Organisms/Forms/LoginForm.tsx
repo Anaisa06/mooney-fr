@@ -1,12 +1,13 @@
-import SubmitButton from '@components/Atoms/buttons/SubmitButton'
-import TextInputField from '@components/Atoms/Inputs/TextInput'
-import { Theme } from '@react-navigation/native'
-import React, { useContext } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { View, Text, StyleSheet } from 'react-native'
-import { AuthContext } from 'src/context/user.context'
-import { LoginNavigationProp } from 'src/navigation/navigation.types'
-import { LoginService } from 'src/services/auth.services'
+import SubmitButton from '@components/Atoms/buttons/SubmitButton';
+import TextInputField from '@components/Atoms/Inputs/TextInput';
+import ConfirmationModal from '@components/Molecules/Modals/ConfirmationModal';
+import { Theme } from '@react-navigation/native';
+import React, { useContext, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { View, Text, StyleSheet } from 'react-native';
+import { AuthContext } from 'src/context/user.context';
+import { LoginNavigationProp } from 'src/navigation/navigation.types';
+import { LoginService } from 'src/services/auth.services';
 
 interface IProps {
     theme: Theme;
@@ -20,38 +21,29 @@ interface IFormInput {
 
 const LoginForm = ({ theme, navigation }: IProps) => {
 
+    const [modalText, setModalText] = useState('');
+    const [openModal, setOpenModal] = useState(false);
+
     const { login } = useContext(AuthContext);
 
-    const { control, handleSubmit, formState: { errors }
+    const { control, handleSubmit, formState: { errors },
     } = useForm<IFormInput>();
 
     const styles = createStyles(theme);
 
     const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
-        console.log(data);
+
         try {
             const response = await LoginService(data);
-            console.log('this is login response', response);
-            if(response.statusCode === 201) {
-                login(response.user);
-               
-            }
+            if(response.statusCode === 201) {login(response.user);}
         } catch (error: any) {
-            console.log('Error in login submit', error);
+            console.error('Error in login submit', error);
             if (error.status === 400 ) {
-                // setModalText('Las credenciales no son válidas')
+                setModalText('Las credenciales no son válidas');
             } else {
-                // setModalText('Algo salió mal')
+                setModalText('Algo salió mal');
             }
-            // setOpenModal(true);
-        }
-        try {
-            const response = await LoginService(data);
-            console.log(response);
-            
-            
-        } catch (error) {
-            console.log('Error in login submit', error);
+            setOpenModal(true);
         }
     };
 
@@ -62,10 +54,10 @@ const LoginForm = ({ theme, navigation }: IProps) => {
                 name="email"
                 rules={{
                     required: 'El email es requerido',
-                    pattern: { value: /^\S+@\S+$/i, message: 'Email inválido' }
+                    pattern: { value: /^\S+@\S+$/i, message: 'Email inválido' },
                 }}
                 render={({ field }) => (
-                    <TextInputField theme={theme} label='Email' field={field} error={errors.email} type='email-address' />
+                    <TextInputField theme={theme} label="Email" field={field} error={errors.email} type="email-address" />
                 )}
             />
             <Controller
@@ -75,22 +67,23 @@ const LoginForm = ({ theme, navigation }: IProps) => {
                     required: 'La contraseña es requerida',
                     minLength: {
                         value: 6,
-                        message: 'La contraseña debe contener al menos 6 caracteres'
-                    }
+                        message: 'La contraseña debe contener al menos 6 caracteres',
+                    },
                 }}
                 render={({ field }) => (
-                    <TextInputField theme={theme} field={field} label='Contraseña' error={errors.password} isPassword={true} />
+                    <TextInputField theme={theme} field={field} label="Contraseña" error={errors.password} isPassword={true} />
                 )}
             />
-            <SubmitButton theme={theme} text='Ingresar' handleSubmit={handleSubmit(onSubmit)} />
+            <SubmitButton theme={theme} text="Ingresar" handleSubmit={handleSubmit(onSubmit)} />
             <Text style={styles.text} >
                 Si aún no tienes una cuenta, regístrate <Text onPress={() => navigation.navigate('Register')} style={styles.span} >aquí</Text>
             </Text>
-            
+            <ConfirmationModal openModal={openModal} onClose={() => setOpenModal(false)} text={modalText} theme={theme} />
+
         </View>
 
-    )
-}
+    );
+};
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -105,14 +98,14 @@ const createStyles = (theme: Theme) =>
             width: '80%',
             margin: 'auto',
             letterSpacing: 1,
-            lineHeight: 30
+            lineHeight: 30,
         },
         span: {
             color: theme.colors.primary,
             fontWeight: 'bold',
             textDecorationLine: 'underline',
-            
-        }
+
+        },
     });
 
-export default LoginForm
+export default LoginForm;

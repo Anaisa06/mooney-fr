@@ -1,6 +1,6 @@
 import { Theme } from '@react-navigation/native';
-import React from 'react'
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import React from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface Props {
     text: string;
@@ -11,7 +11,7 @@ interface Props {
 
 const SubmitButton = ({ handleSubmit, text, theme, backgroundColor }: Props) => {
 
-    const styles = createStyles(theme, backgroundColor)
+    const styles = createStyles(theme, backgroundColor);
 
     return (
         <TouchableOpacity style={styles.button} onPress={handleSubmit} activeOpacity={0.8}>
@@ -30,13 +30,13 @@ const createStyles = (theme: Theme, backgroundColor?: string) =>
             alignItems: 'center',
             justifyContent: 'center',
             elevation: 5,
-            alignSelf: 'center'
+            alignSelf: 'center',
         },
         buttonText: {
             color: backgroundColor ? theme.colors.background : '#F0F0F0',
             fontSize: 17,
             fontWeight: 'bold',
-            textAlign: 'center'
+            textAlign: 'center',
         },
     });
 export default SubmitButton;

@@ -1,6 +1,6 @@
-import { Theme } from '@react-navigation/native'
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Theme } from '@react-navigation/native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-paper';
 import { Transaction } from 'src/interfaces/transaction.interfaces';
 
@@ -12,14 +12,13 @@ interface IProps {
 const TransactionCard = ({ theme, transaction }: IProps) => {
 
     const styles = createStyles(theme);
-    console.log(transaction);
 
-    const amountColor = transaction.type === 'Presupuesto' ? '#12a874ff' : '#F45050'
+    const amountColor = transaction.type === 'Presupuesto' ? '#12a874ff' : '#F45050';
 
     return (
         <View style={styles.amountsContainer}>
             <View style={styles.infoContainer}>
-                <Icon source={transaction.budget.category.icon ? transaction.budget.category.icon : 'arrow-down-thick' } size={50} color={theme.colors.text} />  
+                <Icon source={transaction.budget.category.icon ? transaction.budget.category.icon : 'arrow-down-thick' } size={50} color={theme.colors.text} />
                 <Text style={styles.text} >
                     {transaction.description}
                 </Text>
@@ -34,8 +33,8 @@ const TransactionCard = ({ theme, transaction }: IProps) => {
             </View>
 
         </View>
-    )
-}
+    );
+};
 
 const createStyles = (theme: Theme) => StyleSheet.create({
     text: {
@@ -53,7 +52,7 @@ const createStyles = (theme: Theme) => StyleSheet.create({
         lineHeight: 30,
         marginHorizontal: 10,
         fontWeight: 'bold',
-        textAlign: 'right'
+        textAlign: 'right',
     },
     amountsContainer: {
         justifyContent: 'space-between',
@@ -64,7 +63,7 @@ const createStyles = (theme: Theme) => StyleSheet.create({
         height: 80,
         flexDirection: 'row',
         gap: 10,
-        padding: 5
+        padding: 5,
     },
     infoContainer: {
         alignItems: 'center',
@@ -72,4 +71,4 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     },
 });
 
-export default TransactionCard
+export default TransactionCard;

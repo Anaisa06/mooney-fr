@@ -4,3 +4,9 @@ export interface Category {
     isCustom: boolean
     icon: any
   }
+
+  export interface CreateCategory {
+    name: string;
+    isCustom: boolean;
+    icon: string;
+  }

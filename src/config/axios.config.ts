@@ -1,9 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-// const backApiUrl = 'https://mooney-api.onrender.com/api/';
-
-const backApiUrl = 'http://192.168.89.88:3002/api/'
+const backApiUrl = 'http://prepared-rita-mooney-02759274.koyeb.app/api/';
 
 const apiAxiosInstance = axios.create({
     baseURL: backApiUrl,
@@ -21,16 +19,23 @@ const apiAxiosInstance = axios.create({
         }
         return config;
     },
+    (error) => {
+      console.error('Request error:', error);
+      return Promise.reject(error);
+    }
 );
 
 apiAxiosInstance.interceptors.response.use(
-    (response) => response,
+    (response) =>{
+      return response;
+    },
     (error) => {
+      console.error('Response error:', error.toJSON());
       if (error.response) {
         const customError = {
           message: error.response.data.message || 'Algo salió mal',
           status: error.response.status,
-          
+
         };
         return Promise.reject(customError);
       } else if (error.request) {
@@ -39,6 +44,6 @@ apiAxiosInstance.interceptors.response.use(
         return Promise.reject({ message: 'Error en la solicitud', status: 500 });
       }
     }
-  )
+  );
 
   export default apiAxiosInstance;

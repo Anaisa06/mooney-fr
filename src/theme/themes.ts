@@ -1,5 +1,5 @@
-import { Theme, DefaultTheme } from "@react-navigation/native";
-import { Platform } from "react-native"
+import { Theme } from '@react-navigation/native';
+import { Platform } from 'react-native';
 
 const WEB_FONT_STACK =
   'system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
@@ -70,7 +70,7 @@ export const lightTheme: Theme = {
           },
         },
       }),
-}
+};
 
 export const darkTheme: Theme = {
     dark: true,
@@ -86,29 +86,29 @@ export const darkTheme: Theme = {
         web: {
           regular: {
             fontFamily: WEB_FONT_STACK,
-            fontWeight: '400'
+            fontWeight: '400',
           },
           medium: {
             fontFamily: WEB_FONT_STACK,
-            fontWeight: "500"
+            fontWeight: '500',
           },
           bold: {
             fontFamily: WEB_FONT_STACK,
-            fontWeight: "600",
+            fontWeight: '600',
           },
           heavy: {
             fontFamily: WEB_FONT_STACK,
-            fontWeight: "700",
+            fontWeight: '700',
           },
         },
         ios: {
           regular: {
             fontFamily: 'System',
-            fontWeight: "400",
+            fontWeight: '400',
           },
           medium: {
             fontFamily: 'System',
-            fontWeight: "500",
+            fontWeight: '500',
           },
           bold: {
             fontFamily: 'System',
@@ -138,4 +138,4 @@ export const darkTheme: Theme = {
           },
         },
       }),
-}
+};
