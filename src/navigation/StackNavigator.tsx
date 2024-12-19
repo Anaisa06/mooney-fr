@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react'
+import React from 'react';
 import { RootStackParamList } from './navigation.types';
 import Loading from '@screens/Loading';
 import Register from '@screens/Register';
@@ -17,17 +17,17 @@ export const AuthStackNavigator = () => {
             </>
 
         </Stack.Navigator>
-    )
-}
+    );
+};
 
 export const LoadingStackNavigator = () => {
     return (
         <Stack.Navigator>
 
-            <Stack.Screen name='Loading' component={Loading} options={{
-                headerShown: false
+            <Stack.Screen name="Loading" component={Loading} options={{
+                headerShown: false,
             }} />
 
         </Stack.Navigator>
-    )
-}
+    );
+};

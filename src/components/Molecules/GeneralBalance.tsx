@@ -1,6 +1,6 @@
 import { Theme } from '@react-navigation/native';
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface IProps {
     theme: Theme;
@@ -25,7 +25,7 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses, title }: IProps) =>
     const availableTextColor =
         expensesPercentage > 80 && expensesPercentage < 100
             ? '#3C486B'
-            : '#F0F0F0'
+            : '#F0F0F0';
 
     return (
         <View style={styles.container}>
@@ -63,10 +63,10 @@ const GeneralBalance = ({ theme, totalBudget, totalExpenses, title }: IProps) =>
             </View>
             <View style={styles.line} />
         </View>
-    )
-}
+    );
+};
 
-export default GeneralBalance
+export default GeneralBalance;
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -80,14 +80,14 @@ const createStyles = (theme: Theme) =>
             textAlign: 'left',
             fontSize: 20,
             letterSpacing: 1,
-            lineHeight: 30
+            lineHeight: 30,
         },
         text: {
             color: theme.colors.text,
             fontSize: 15,
             letterSpacing: 1,
             lineHeight: 30,
-            marginHorizontal: 10
+            marginHorizontal: 10,
         },
         line: {
             borderBottomColor: theme.colors.text,
@@ -98,12 +98,12 @@ const createStyles = (theme: Theme) =>
             fontSize: 25,
             letterSpacing: 1,
             marginHorizontal: 40,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
         },
         amountsContainer: {
             display: 'flex',
             borderRadius: 8,
             padding: 5,
             justifyContent: 'center',
-        }
+        },
     });

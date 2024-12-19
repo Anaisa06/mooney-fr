@@ -1,7 +1,7 @@
 import { Theme } from '@react-navigation/native';
-import React from 'react'
+import React from 'react';
 import { ControllerRenderProps, FieldError } from 'react-hook-form';
-import { View, TextInput, StyleSheet, KeyboardTypeOptions, Text } from 'react-native'
+import { View, TextInput, StyleSheet, KeyboardTypeOptions, Text } from 'react-native';
 
 interface Props {
     label: string;
@@ -33,8 +33,8 @@ const TextInputField = ({ label, field, error, type = 'default', isPassword = fa
                 </Text>
             }
         </View>
-    )
-}
+    );
+};
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -48,7 +48,7 @@ const createStyles = (theme: Theme) =>
             backgroundColor: theme.colors.text,
             color: theme.colors.background,
             fontWeight: 'semibold',
-            fontSize: 14
+            fontSize: 14,
         },
         inputError: {
             borderColor: 'red',
@@ -57,9 +57,9 @@ const createStyles = (theme: Theme) =>
             color: 'red',
             fontSize: 10,
             textAlign: 'center',
-            letterSpacing: 1
+            letterSpacing: 1,
         },
-    })
+    });
 
 
 export default TextInputField;

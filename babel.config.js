@@ -14,12 +14,12 @@ module.exports = {
           '@assets': './assets',
           '@components': './src/components',
           '@screens': './src/screens',
-          "@components": "./src/components",
-          "src": "./src"
-        }
+          '@components': './src/components',
+          'src': './src',
+        },
       },
     ],
-    'react-native-reanimated/plugin'
+    'react-native-reanimated/plugin',
   ],
 
 };

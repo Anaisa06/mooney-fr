@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import React, { useState } from 'react';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-paper';
 import { Theme } from '@react-navigation/native';
@@ -49,7 +49,7 @@ const DateSelect = ({ theme, label, value, onChangeField, minDate, error }: IPro
                     mode="date"
                     display="spinner"
                     onChange={onChange}
-                    timeZoneName='UTC'
+                    timeZoneName="UTC"
                     minimumDate={minDate}
                 />
             }
@@ -61,8 +61,8 @@ const DateSelect = ({ theme, label, value, onChangeField, minDate, error }: IPro
                 </Text>
             }
         </>
-    )
-}
+    );
+};
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -73,20 +73,20 @@ const createStyles = (theme: Theme) =>
             padding: 15,
             borderRadius: 8,
             backgroundColor: theme.colors.text,
-            justifyContent: 'center'
+            justifyContent: 'center',
 
         },
         buttonText: {
             color: theme.colors.background,
             fontWeight: 'semibold',
-            fontSize: 14
+            fontSize: 14,
         },
         errorText: {
             color: 'red',
             fontSize: 10,
             textAlign: 'center',
-            letterSpacing: 1
+            letterSpacing: 1,
         },
-    })
+    });
 
-export default DateSelect
+export default DateSelect;

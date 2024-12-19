@@ -1,4 +1,4 @@
-import { Budget } from "./budget.interfaces"
+import { Budget } from './budget.interfaces';
 
 export interface Transaction {
     id: number

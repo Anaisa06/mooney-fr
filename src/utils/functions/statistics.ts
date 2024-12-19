@@ -1,6 +1,6 @@
-import { Category } from "src/interfaces/category.interfaces";
-import { Transaction } from "src/interfaces/transaction.interfaces";
-import { generateRandomColor } from "./randomColor";
+import { Category } from 'src/interfaces/category.interfaces';
+import { Transaction } from 'src/interfaces/transaction.interfaces';
+import { generateRandomColor } from './randomColor';
 
 interface GroupedTransactions {
     category: Category;

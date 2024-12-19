@@ -1,5 +1,5 @@
 import { Theme } from '@react-navigation/native';
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { Portal, Modal, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,13 +18,13 @@ const CustomModal = ({ openModal, onClose, children, theme }: IProps) => {
     return (
         <Portal>
             <Modal visible={openModal} dismissable={false} contentContainerStyle={containerStyle}>
-                <Icon name='close' size={30} color={theme.colors.text} onPress={onClose} />
+                <Icon name="close" size={30} color={theme.colors.text} onPress={onClose} />
                 <ScrollView>
                     {children}
                 </ScrollView>
             </Modal>
         </Portal>
     );
-}
+};
 
-export default CustomModal
+export default CustomModal;

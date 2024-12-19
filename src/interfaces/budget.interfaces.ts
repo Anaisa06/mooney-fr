@@ -1,5 +1,5 @@
-import { Category } from "./category.interfaces"
-import { IUser } from "./user.interface"
+import { Category } from './category.interfaces';
+import { IUser } from './user.interface';
 
 export interface Budget {
   id: number

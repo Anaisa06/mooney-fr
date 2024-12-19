@@ -1,8 +1,8 @@
 import { Theme } from '@react-navigation/native';
-import React from 'react'
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-paper';
-import { Pie, PolarChart, } from "victory-native";
+import { Pie, PolarChart } from 'victory-native';
 
 interface IProps {
     theme: Theme;
@@ -14,11 +14,11 @@ const PieChart = ({ theme, data, title }: IProps) => {
 
     const styles = createStyles(theme);
 
-    const total = data.reduce((sum, item) => sum + item.value, 0)
+    const total = data.reduce((sum, item) => sum + item.value, 0);
 
     const calculatePercentage = (total: number, value: number) => {
-        return ((value * 100) / total).toFixed(2)
-    }
+        return ((value * 100) / total).toFixed(2);
+    };
 
     return (
         <View style={{ display: 'flex', marginVertical: 20 }}>
@@ -34,8 +34,7 @@ const PieChart = ({ theme, data, title }: IProps) => {
 
                                     return (
                                         <>
-                                            <Pie.Slice >
-                                            </Pie.Slice>
+                                            <Pie.Slice  />
                                             <Pie.SliceAngularInset
                                                 angularInset={{
                                                     angularStrokeWidth: 8,
@@ -56,17 +55,17 @@ const PieChart = ({ theme, data, title }: IProps) => {
                 {
                     data.map((item, idx) =>
                         <View style={styles.iconLabel} key={`${item.label}+${idx}`} >
-                            <Icon source='square-rounded' size={20} color={item.color} />
-                            <Text style={styles.text} >{item.label}{"\n"}(%{calculatePercentage(total, item.value)})</Text>
+                            <Icon source="square-rounded" size={20} color={item.color} />
+                            <Text style={styles.text} >{item.label}{'\n'}(%{calculatePercentage(total, item.value)})</Text>
                         </View>)
                 }
 
             </View>
         </View>
-    )
-}
+    );
+};
 
-export default PieChart
+export default PieChart;
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -90,7 +89,7 @@ const createStyles = (theme: Theme) =>
         },
         text: {
             color: theme.colors.background,
-            letterSpacing: 1
+            letterSpacing: 1,
         },
         title: {
             color: theme.colors.text,
@@ -99,4 +98,4 @@ const createStyles = (theme: Theme) =>
             letterSpacing: 1,
 
         },
-    })
+    });

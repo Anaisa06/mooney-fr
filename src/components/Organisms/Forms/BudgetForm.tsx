@@ -4,7 +4,7 @@ import PickerSelect from '@components/Atoms/Inputs/PickerSelect';
 import RadioSelect from '@components/Atoms/Inputs/RadioSelect';
 import TextInputField from '@components/Atoms/Inputs/TextInput';
 import { Theme, useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { Pressable, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import { BudgetFrecuency, BugdetType, CreateBudget } from 'src/interfaces/budget.interfaces';
@@ -16,15 +16,7 @@ import { getCategories } from 'src/services/category.services';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomModal from '@components/Molecules/Modals/CustomModal';
 import CategoryForm from './CategoryForm';
-
-interface IFormInput {
-    categoryId: number;
-    type: BugdetType;
-    startDate?: Date;
-    endDate?: Date;
-    frequency?: BudgetFrecuency;
-    total: number;
-}
+import { useBudgetForm } from 'src/hooks/Home/useBudgetForm';
 
 interface IProps {
     theme: Theme;
@@ -34,70 +26,22 @@ interface IProps {
 
 const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
 
-    const [categories, setCategories] = useState<Category[]>([])
-    const [fetchCategories, setFetchCategories] = useState(false)
-    const [openModal, setOpenModal] = useState(false);
-
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const data = await getCategories();
-                setCategories(data);
-            } catch (error) {
-                console.error('Error fetching categories in budget form', error)
-            } 
-        }
-        fetchCategories()
-    }, [fetchCategories])
-
-    const { control, handleSubmit, formState: { errors }
-    } = useForm<IFormInput>();
-
     const styles = createStyles(theme);
 
-    const categoriesForPicker = categories.map(category => { return { name: category.name, id: category.id } })
-
-    const typesForPicker = [
-        { name: BugdetType.FREQUENT, id: 'freq' },
-        { name: BugdetType.OCASSIONAL, id: 'ocas' }
-    ]
-
-    const frequencyForPicker = [
-        { name: BudgetFrecuency.MONTHLY, id: 'month' },
-        { name: BudgetFrecuency.BIWEEKLY, id: 'biweek' },
-        { name: BudgetFrecuency.WEEKLY, id: 'week' }
-    ]
-
-    const type = useWatch({ control, name: 'type' });
-    const startDate = useWatch({ control, name: 'startDate'})
-
-    const handleCategoryModalClose = () => {
-        setFetchCategories(!fetchCategories)
-        setOpenModal(false)
-    }
-
-    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        
-        const toSave: CreateBudget = {
-            categoryId: +data.categoryId,
-            startDate: data.startDate,
-            endDate: data.endDate,
-            total: +data.total,
-            type: data.type,
-            frequency: data.frequency
-        }
-
-        try {
-            const response = await createBudget(toSave)
-            if(response.statusCode === 201) {
-                reRender()
-                closeModal()
-            }
-
-        } catch (error) {
-            console.error('Error saving budget in form', error)
-        }
-    }
+    const {
+        control,
+        categoriesForPicker,
+        errors,
+        setOpenModal,
+        typesForPicker,
+        type,
+        frequencyForPicker,
+        startDate,
+        handleSubmit,
+        handleCategoryModalClose,
+        openModal,
+        onSubmit,
+    } = useBudgetForm(reRender, closeModal);
 
     return (
 
@@ -111,15 +55,15 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                     required: 'La categoría es requerida',
                 }}
                 render={({ field }) => (
-                    <PickerSelect onChange={field.onChange} value={field.value} items={categoriesForPicker} theme={theme} error={errors.categoryId} label='Seleccionar categoría' />
+                    <PickerSelect onChange={field.onChange} value={field.value} items={categoriesForPicker} theme={theme} error={errors.categoryId} label="Seleccionar categoría" />
                 )}
             />
-            <TouchableOpacity 
-            activeOpacity={0.3} 
-            style={{flexDirection: 'row', width: '80%', marginHorizontal: 'auto', alignItems: 'center', gap: 5}} 
-            onPress={() => setOpenModal(true)} >
-                <Icon name='add-circle-sharp' size={20} style={{ width: 25}} color={theme.colors.text}/>
-                <Text style={{color: theme.colors.text, letterSpacing: 1, fontSize: 12}} >Crear categoría</Text>
+            <TouchableOpacity
+                activeOpacity={0.3}
+                style={{ flexDirection: 'row', width: '80%', marginHorizontal: 'auto', alignItems: 'center', gap: 5 }}
+                onPress={() => setOpenModal(true)} >
+                <Icon name="add-circle-sharp" size={20} style={{ width: 25 }} color={theme.colors.text} />
+                <Text style={{ color: theme.colors.text, letterSpacing: 1, fontSize: 12 }} >Crear categoría</Text>
             </TouchableOpacity>
 
             <Controller
@@ -129,7 +73,7 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                     required: 'El tipo es requerido',
                 }}
                 render={({ field }) => (
-                    <RadioSelect theme={theme} items={typesForPicker} label='Tipo' value={field.value} onChange={field.onChange} error={errors.type} />
+                    <RadioSelect theme={theme} items={typesForPicker} label="Tipo" value={field.value} onChange={field.onChange} error={errors.type} />
                 )}
             />
 
@@ -142,7 +86,7 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                         required: 'La frecuencia es requerida',
                     }}
                     render={({ field }) => (
-                        <RadioSelect theme={theme} items={frequencyForPicker} label='Frecuencia' value={field.value} onChange={field.onChange} error={errors.frequency} />
+                        <RadioSelect theme={theme} items={frequencyForPicker} label="Frecuencia" value={field.value} onChange={field.onChange} error={errors.frequency} />
                     )}
                 />
 
@@ -158,7 +102,7 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                             required: 'La fecha de inicio es requerida',
                         }}
                         render={({ field }) => (
-                            <DateSelect theme={theme} label='Fecha de inicio' value={field.value} onChangeField={field.onChange} error={errors.startDate} />
+                            <DateSelect theme={theme} label="Fecha de inicio" value={field.value} onChangeField={field.onChange} error={errors.startDate} />
                         )}
                     />
 
@@ -169,7 +113,7 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                             required: 'La fecha de finalización es requerida',
                         }}
                         render={({ field }) => (
-                            <DateSelect theme={theme} label='Fecha de finalización' value={field.value} onChangeField={field.onChange} error={errors.endDate} minDate={startDate} />
+                            <DateSelect theme={theme} label="Fecha de finalización" value={field.value} onChangeField={field.onChange} error={errors.endDate} minDate={startDate} />
                         )}
                     />
                 </>
@@ -187,20 +131,20 @@ const BudgetForm = ({ theme, closeModal, reRender }: IProps) => {
                     },
                 }}
                 render={({ field }) => (
-                    <TextInputField theme={theme} field={field} label='Seleccionar total' error={errors.total} type='phone-pad' />
+                    <TextInputField theme={theme} field={field} label="Seleccionar total" error={errors.total} type="phone-pad" />
                 )}
             />
-            <SubmitButton theme={theme} text='Guardar' handleSubmit={handleSubmit(onSubmit)} />
+            <SubmitButton theme={theme} text="Guardar" handleSubmit={handleSubmit(onSubmit)} />
             <CustomModal openModal={openModal} onClose={handleCategoryModalClose} theme={theme} >
-                <CategoryForm theme={theme} onClose={handleCategoryModalClose}/>
+                <CategoryForm theme={theme} onClose={handleCategoryModalClose} />
             </CustomModal>
 
 
         </View>
-    )
-}
+    );
+};
 
-export default BudgetForm
+export default BudgetForm;
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -210,6 +154,6 @@ const createStyles = (theme: Theme) =>
             fontSize: 20,
             width: '100%',
             letterSpacing: 1,
-            fontWeight: 'bold'
-        }
+            fontWeight: 'bold',
+        },
     });

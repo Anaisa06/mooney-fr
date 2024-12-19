@@ -2,10 +2,8 @@ import SubmitButton from '@components/Atoms/buttons/SubmitButton';
 import IconSelect from '@components/Atoms/Inputs/IconSelect';
 import TextInputField from '@components/Atoms/Inputs/TextInput';
 import { Theme } from '@react-navigation/native';
-import React, { useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
-import { IconButton } from 'react-native-paper';
 import { createCategory } from 'src/services/category.services';
 
 interface IProps {
@@ -19,13 +17,13 @@ interface IFormInput {
 }
 
 const iconsList: string[] = [
-    'account', 'account-heart', 'airplane', 'alien', 'ambulance', 'baby-carriage', 'bank', 'beach', 'motorbike', 'car', 'cart', 'cat', 'controller-classic', 'cupcake', 'dog', 'dumbbell', 'food', 'hand-water', 'lightning-bolt', 'music'
-]
+    'account', 'account-heart', 'airplane', 'alien', 'ambulance', 'baby-carriage', 'bank', 'beach', 'motorbike', 'car', 'cart', 'cat', 'controller-classic', 'cupcake', 'dog', 'dumbbell', 'food', 'hand-water', 'lightning-bolt', 'music',
+];
 
 const CategoryForm = ({ theme, onClose }: IProps) => {
 
 
-    const { control, handleSubmit, formState: { errors }
+    const { control, handleSubmit, formState: { errors },
     } = useForm<IFormInput>();
     const styles = createStyles(theme);
 
@@ -34,12 +32,12 @@ const CategoryForm = ({ theme, onClose }: IProps) => {
             const response = await createCategory({...data, isCustom: true});
 
             if(response.statusCode === 201) {
-                onClose()
+                onClose();
             }
         } catch (error) {
-            console.error('Error creating category in form', error);            
+            console.error('Error creating category in form', error);
         }
-    }
+    };
 
     return (
 
@@ -51,10 +49,10 @@ const CategoryForm = ({ theme, onClose }: IProps) => {
                 control={control}
                 rules={{
                     required: 'El nombre es requerido',
-                    maxLength: 15
+                    maxLength: 15,
                 }}
                 render={({ field }) => (
-                    <TextInputField theme={theme} field={field} label='Nombre de la categoría' error={errors.name} />
+                    <TextInputField theme={theme} field={field} label="Nombre de la categoría" error={errors.name} />
                 )}
             />
 
@@ -69,10 +67,10 @@ const CategoryForm = ({ theme, onClose }: IProps) => {
                     <IconSelect theme={theme} setIcon={field.onChange} items={iconsList} value={field.value} error={errors.icon} />
                 )}
             />
-            <SubmitButton text='Guardar' theme={theme} handleSubmit={handleSubmit(onSubmit)} />
+            <SubmitButton text="Guardar" theme={theme} handleSubmit={handleSubmit(onSubmit)} />
         </View>
-    )
-}
+    );
+};
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -82,8 +80,8 @@ const createStyles = (theme: Theme) =>
             fontSize: 20,
             width: '100%',
             letterSpacing: 1,
-            fontWeight: 'bold'
-        }
+            fontWeight: 'bold',
+        },
     });
 
-export default CategoryForm
+export default CategoryForm;

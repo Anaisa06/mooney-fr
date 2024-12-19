@@ -1,5 +1,5 @@
 import { Theme } from '@react-navigation/native';
-import { DefaultSectionT, SectionList, SectionListData, StyleSheet, Text, View } from 'react-native'
+import {  SectionList,  StyleSheet, Text, View } from 'react-native';
 import { Transaction } from 'src/interfaces/transaction.interfaces';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -19,8 +19,8 @@ const groupByDate = (transactions: Transaction[]) => {
     let groupedObject: any = {};
 
     transactions.forEach(transaction => {
-        const date = format(transaction.date, "MMMM d", {
-            locale: es
+        const date = format(transaction.date, 'MMMM d', {
+            locale: es,
         });
 
         if (!groupedObject[date]) {
@@ -28,14 +28,14 @@ const groupByDate = (transactions: Transaction[]) => {
         }
 
         groupedObject[date].data.push(transaction);
-    })
+    });
 
 
     const groupedTransactions = Object.values(groupedObject);
 
     return groupedTransactions;
 
-}
+};
 
 const Transactions = ({ theme, transactions, totalBudget, totalExpenses, title }: IProps) => {
     const styles = createStyles(theme);
@@ -44,13 +44,10 @@ const Transactions = ({ theme, transactions, totalBudget, totalExpenses, title }
 
     return (
         <View style={styles.container}>
-            {/* <Text style={styles.title} >
-                Últimas transacciones
-            </Text> */}
             <SectionList
                 style={{ marginBottom: 90, marginTop: 10 }}
                 sections={data}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (<TransactionCard theme={theme} transaction={item} />)}
                 ListHeaderComponent={
                     <>
@@ -65,20 +62,19 @@ const Transactions = ({ theme, transactions, totalBudget, totalExpenses, title }
                 )}
                 showsVerticalScrollIndicator={false}
 
-                
+
             />
         </View>
-    )
-}
+    );
+};
 
-export default Transactions
+export default Transactions;
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
         container: {
             flex: 1,
-            // backgroundColor: theme.colors.primary,
-            marginHorizontal: 25
+            marginHorizontal: 25,
         },
         title: {
             color: theme.colors.text,
@@ -91,7 +87,7 @@ const createStyles = (theme: Theme) =>
             fontSize: 15,
             letterSpacing: 1,
             lineHeight: 30,
-            marginHorizontal: 10
+            marginHorizontal: 10,
         },
 
     });

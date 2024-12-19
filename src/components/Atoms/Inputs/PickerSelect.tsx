@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Picker } from '@react-native-picker/picker'
+import React, { useState } from 'react';
+import { Picker } from '@react-native-picker/picker';
 import { StyleSheet, Text, View } from 'react-native';
 import { Theme } from '@react-navigation/native';
 import { FieldError } from 'react-hook-form';
@@ -27,7 +27,7 @@ const PickerSelect = ({ items, onChange, value, theme, error, label }: IProps) =
                     dropdownIconColor={theme.colors.background}
                     selectionColor={theme.colors.primary}
                     style={styles.pickerContainer}
- 
+
                     selectedValue={value}
                     onValueChange={onChange}>
 
@@ -50,10 +50,10 @@ const PickerSelect = ({ items, onChange, value, theme, error, label }: IProps) =
 
         </View>
 
-    )
-}
+    );
+};
 
-export default PickerSelect
+export default PickerSelect;
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -66,17 +66,17 @@ const createStyles = (theme: Theme) =>
             borderRadius: 8,
             backgroundColor: theme.colors.text,
             color: theme.colors.background,
-            justifyContent: 'center'
+            justifyContent: 'center',
         },
         pickerContainer: {
             color: theme.colors.background,
-            padding: 10
+            padding: 10,
         },
         item: {
             color: theme.colors.background,
             backgroundColor: theme.colors.text ,
             fontSize: 14,
-            borderRadius: 8
+            borderRadius: 8,
         },
         inputError: {
             borderColor: 'red',
@@ -85,6 +85,6 @@ const createStyles = (theme: Theme) =>
             color: 'red',
             fontSize: 10,
             textAlign: 'center',
-            letterSpacing: 1
+            letterSpacing: 1,
         },
-    })
+    });

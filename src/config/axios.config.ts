@@ -1,20 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import https from 'https';
-
-
-// const agent = new https.Agent({
-//   rejectUnauthorized: false,
-// });
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const backApiUrl = 'http://prepared-rita-mooney-02759274.koyeb.app/api/';
 
-// const backApiUrl = 'http://192.168.1.7:3002/api/'
-
-
 const apiAxiosInstance = axios.create({
     baseURL: backApiUrl,
-    timeout: 10000,     
+    timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
   },
@@ -44,7 +35,7 @@ apiAxiosInstance.interceptors.response.use(
         const customError = {
           message: error.response.data.message || 'Algo salió mal',
           status: error.response.status,
-          
+
         };
         return Promise.reject(customError);
       } else if (error.request) {
@@ -53,6 +44,6 @@ apiAxiosInstance.interceptors.response.use(
         return Promise.reject({ message: 'Error en la solicitud', status: 500 });
       }
     }
-  )
+  );
 
   export default apiAxiosInstance;

@@ -1,8 +1,9 @@
 import { Theme } from '@react-navigation/native';
-import React from 'react'
+import React from 'react';
 import { FieldError } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 import { RadioButton, Text } from 'react-native-paper';
+import { TransactionType } from 'src/interfaces/transaction.interfaces';
 
 interface IProps {
     items: {
@@ -36,7 +37,7 @@ const RadioSelect = ({ items, value, onChange, theme, error, label }: IProps) =>
                                 value={item.name}
                                 key={item.id}
                             />
-                            <Text style={styles.text} >{item.name}</Text>
+                            <Text style={styles.text} >{item.name === TransactionType.BUDGET ? 'Ingreso' : item.name}</Text>
                         </View>
                     )
                 }
@@ -49,21 +50,21 @@ const RadioSelect = ({ items, value, onChange, theme, error, label }: IProps) =>
                 </Text>
             }
         </RadioButton.Group>
-    )
-}
+    );
+};
 
-export default RadioSelect
+export default RadioSelect;
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
         text: {
             color: theme.colors.text,
-            letterSpacing: 1
+            letterSpacing: 1,
         },
         errorText: {
             color: 'red',
             fontSize: 10,
             textAlign: 'center',
-            letterSpacing: 1
+            letterSpacing: 1,
         },
-    })
+    });

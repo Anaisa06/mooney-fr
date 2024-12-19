@@ -1,8 +1,8 @@
 import { Theme } from '@react-navigation/native';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { FieldError } from 'react-hook-form';
 import { StyleSheet, Text, View } from 'react-native';
-import { IconButton } from 'react-native-paper'
+import { IconButton } from 'react-native-paper';
 
 interface IProps {
     theme: Theme;
@@ -41,9 +41,9 @@ const IconSelect = ({ theme, items, setIcon, value, error }: IProps) => {
                 </Text>
             }
         </View>
-    )
+    );
 
-}
+};
 
 const createStyles = (theme: Theme) =>
     StyleSheet.create({
@@ -57,8 +57,8 @@ const createStyles = (theme: Theme) =>
             color: 'red',
             fontSize: 10,
             textAlign: 'center',
-            letterSpacing: 1
+            letterSpacing: 1,
         },
     });
 
-export default IconSelect
+export default IconSelect;

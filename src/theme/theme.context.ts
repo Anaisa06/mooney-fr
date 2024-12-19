@@ -1,5 +1,5 @@
-import { createContext, Dispatch, SetStateAction } from "react";
-import { ColorSchemeName } from "react-native";
+import { createContext, Dispatch, SetStateAction } from 'react';
+import { ColorSchemeName } from 'react-native';
 
 export interface ThemeContextProps {
     themeType: ColorSchemeName;
@@ -8,8 +8,8 @@ export interface ThemeContextProps {
 
 const defaultTheme: ThemeContextProps = {
     themeType: 'light',
-    toggleTheme: (prev) => (prev === 'light' ? 'dark' : 'light')
-}
+    toggleTheme: (prev) => (prev === 'light' ? 'dark' : 'light'),
+};
 
 export const ThemeContext = createContext(defaultTheme);
 
